@@ -74,11 +74,34 @@
 
         footer { text-align: center; padding: 30px; background-color: var(--dark-color); color: var(--light-color); }
         
+                /* ===== CSS CHO THIẾT BỊ DI ĐỘNG (ĐÃ TỐI ƯU) ===== */
         @media (max-width: 900px) {
-            .about-hero { flex-direction: column; text-align: center; }
-            .intro-text .mission-statement { border-left: none; padding-left: 0; }
-            .about-grid { grid-template-columns: 1fr; }
-        }
+            .app-grid, .results-container { 
+                grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+            }
+            .advice-card, .macros-card, .cta-card { 
+                grid-column: auto; /* Xóa thuộc tính gộp cột */
+            }
+            .main-header { 
+                flex-direction: column; /* Xếp logo và menu theo chiều dọc */
+                gap: 20px;
+                padding-bottom: 20px;
+            }
+            .main-nav {
+                display: flex;
+                flex-wrap: wrap; /* Cho phép menu xuống dòng nếu không đủ chỗ */
+                justify-content: center;
+                gap: 10px;
+            }
+            .main-nav a {
+                margin-left: 0; /* Xóa khoảng cách trái của menu */
+            }
+            .card {
+                padding: 20px; /* Giảm padding cho card */
+            }
+            .calculator-form h1 {
+                font-size: 1.6em; /* Giảm cỡ chữ tiêu đề */
+            }
     </style>
 </head>
 <body>
@@ -179,4 +202,5 @@
     </footer>
 
 </body>
+
 </html>
