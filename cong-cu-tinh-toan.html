@@ -87,11 +87,13 @@
         .bmr-secondary .value { font-size: 1.8em; font-weight: 700; }
         .bmr-secondary .label { font-size: 0.9em; opacity: 0.7; }
 
-        .advice-card, .macros-card, .cta-card { grid-column: 1 / -1; }
-        .detail-item { margin-bottom: 15px; }
-        .detail-item p { font-size: 0.9em; opacity: 0.9; }
-        .detail-item-title { font-size: 1em; font-weight: 700; margin-bottom: 5px; display: flex; align-items: center; }
-        .detail-item-title span { margin-right: 8px; }
+        .advice-card { grid-column: 1 / -1; }
+        .macros-card, .cta-card { grid-column: 1 / -1; }
+        .detail-item { margin-bottom: 25px; }
+        .detail-item p, .detail-item ul { font-size: 0.95em; opacity: 0.9; line-height: 1.7; }
+        .detail-item ul { list-style-position: inside; padding-left: 10px;}
+        .detail-item-title { font-size: 1.1em; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; }
+        .detail-item-title span { margin-right: 12px; font-size: 1.2em; }
         .tdee-macro-table { width: 100%; border-collapse: collapse; text-align: center; }
         .tdee-macro-table th, .tdee-macro-table td { padding: 12px; border-bottom: 1px solid var(--gray-bg); }
         .tdee-macro-table th { font-weight: 700; font-size: 0.9em; }
@@ -104,6 +106,14 @@
         .cta-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
         .hidden { display: none; }
+
+        /* ===== CSS CHO POP-UP ỦNG HỘ ===== */
+        .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); animation: fadeIn 0.3s; }
+        .modal-content { background-color: #fff; margin: 10% auto; padding: 25px; border-radius: var(--border-radius); width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.4s ease-out; }
+        @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+        .modal-content img { max-width: 100%; height: auto; border-radius: 10px; }
+        .close-button { color: #aaa; position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; transition: color 0.3s; }
+        .close-button:hover, .close-button:focus { color: #333; text-decoration: none; cursor: pointer; }
         
         @media (max-width: 900px) {
             .app-grid, .results-container { grid-template-columns: 1fr; }
@@ -192,10 +202,19 @@
                         <div class="bmr-secondary"><div class="label">❤️ Năng lượng Cơ bản (BMR)</div><div class="value" id="bmr-value">--</div></div>
                     </div>
                     <div class="result-card advice-card">
-                        <h3>Lời khuyên cho bạn</h3>
-                        <div class="detail-item"><h4 class="detail-item-title"><span style="color: var(--status-obese);">🚨</span>Mức độ cảnh báo</h4><p id="bmi-warning"></p></div>
-                        <div class="detail-item"><h4 class="detail-item-title"><span style="color: var(--status-normal);">💪</span>Hành động</h4><p id="bmi-action"></p></div>
-                        <div class="detail-item"><h4 class="detail-item-title"><span style="color: var(--primary-color);">🥗</span>Khuyến nghị</h4><p id="bmi-recommendation"></p></div>
+                        <h3>Lời khuyên dành cho bạn</h3>
+                        <div class="detail-item">
+                            <h4 class="detail-item-title"><span>🚨</span>Mức độ cảnh báo</h4>
+                            <p id="bmi-warning"></p>
+                        </div>
+                        <div class="detail-item">
+                            <h4 class="detail-item-title"><span>💪</span>Lời khuyên hành động</h4>
+                            <div id="bmi-action"></div>
+                        </div>
+                        <div class="detail-item">
+                            <h4 class="detail-item-title"><span>🥗</span>Khuyến nghị chung</h4>
+                            <p id="bmi-recommendation"></p>
+                        </div>
                     </div>
                     <div class="result-card macros-card">
                         <h3>Bảng Macros Gợi ý</h3>
@@ -211,7 +230,26 @@
                 </div>
             </div>
         </div>
+
+        <div style="background: linear-gradient(45deg, #eef5f9, #d9e8f6); margin-top: 30px; text-align: center; padding: 40px 25px; border-radius: var(--border-radius); animation: fadeIn 0.5s ease-out forwards;">
+            <h3 style="font-size: 1.6em; color: var(--dark-color); margin-bottom: 15px;">Thấy công cụ này hữu ích?</h3>
+            <p style="max-width: 600px; margin: 0 auto 25px; font-size: 1.05em; line-height: 1.7; opacity: 0.85;">
+                Sự ủng hộ của bạn, dù là nhỏ nhất, cũng là động lực lớn giúp tôi duy trì và phát triển thêm nhiều công cụ miễn phí khác cho cộng đồng.
+            </p>
+            <button id="donate-button" class="btn" style="display: inline-block; width: auto; text-decoration: none; padding: 12px 30px;">
+                Mời tôi một ly cà phê ☕
+            </button>
+        </div>
+        
         <p style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #7f8c8d;">Lưu ý: Các kết quả tính toán chỉ mang tính chất tham khảo. Hãy liên hệ chuyên gia để có lời khuyên chính xác nhất.</p>
+    </div>
+
+    <div id="qr-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h4 style="margin-bottom: 15px; font-size: 1.2em;">Quét mã để ủng hộ</h4>
+            <img src="https://i.postimg.cc/CMt81Z5n/TCB-QR-STORE-202522294958.jpg" alt="Mã QR ủng hộ">
+        </div>
     </div>
     
     <script>
@@ -219,7 +257,9 @@
         const welcomePanel = document.getElementById('welcome-panel');
         const resultsContainer = document.getElementById('results-container');
 
-        // ========= BỔ SUNG CÁC HÀM BỊ THIẾU =========
+        // ===============================================
+        // ===== BẮT ĐẦU CÁC HÀM JAVASCRIPT ĐẦY ĐỦ =====
+        // ===============================================
         function animateValue(element, start, end, duration) {
             let startTimestamp = null;
             const step = (timestamp) => {
@@ -251,10 +291,21 @@
                 return {
                     text: 'Thiếu cân',
                     className: 'status-underweight',
-                    summary: 'Bạn có thể cần tăng cân để đạt mức khỏe mạnh.',
-                    warning: 'Tình trạng thiếu cân có thể dẫn đến hệ miễn dịch yếu, mệt mỏi và thiếu hụt dinh dưỡng.',
-                    action: 'Tập trung vào việc xây dựng cơ bắp và tăng cường dinh dưỡng. Các bài tập kháng lực sẽ rất hiệu quả.',
-                    recommendation: 'Tăng lượng calo nạp vào với các thực phẩm giàu dinh dưỡng như protein, carb phức hợp và chất béo lành mạnh. Chia nhỏ bữa ăn trong ngày.',
+                    summary: 'Cơ thể bạn đang không có đủ năng lượng và dưỡng chất.',
+                    warning: 'CAO ĐẾN BÁO ĐỘNG ĐỎ. Đây không phải là một vóc dáng "mảnh mai" đáng ao ước mà là một tình trạng sức khỏe đáng báo động. Cơ thể bạn đang không có đủ năng lượng và dưỡng chất để duy trì các chức năng sống cơ bản một cách tối ưu. Đặc biệt với BMI dưới 17 (Gầy độ II, III): Đây là mức BÁO ĐỘNG ĐỎ. Nguy cơ suy giảm hệ miễn dịch, loãng xương, rụng tóc, mất cơ, rối loạn nội tiết (ở phụ nữ có thể gây mất kinh), và suy nhược toàn thân là rất cao.',
+                    action: `<ul>
+                                <li><strong>Gặp chuyên gia y tế NGAY LẬP TỨC:</strong> Bước đầu tiên và quan trọng nhất là phải đi khám bác sĩ để loại trừ các nguyên nhân bệnh lý tiềm ẩn gây sụt cân hoặc khó tăng cân (ví dụ: bệnh về tuyến giáp, rối loạn tiêu hóa, nhiễm ký sinh trùng...).</li>
+                                <li><strong>Tăng cường dinh dưỡng CHẤT LƯỢNG:</strong> Mục tiêu không phải là ăn thật nhiều đồ ngọt hay chất béo bão hòa. Hãy tập trung tăng lượng calo từ các nguồn thực phẩm lành mạnh:
+                                    <ul>
+                                        <li><strong>Protein:</strong> Tăng cường thịt nạc, cá, trứng, sữa, các loại đậu, hạt để xây dựng lại khối cơ bắp đã mất.</li>
+                                        <li><strong>Chất béo tốt:</strong> Bổ sung quả bơ, dầu ô liu, các loại hạt (óc chó, hạnh nhân), cá béo (cá hồi, cá trích).</li>
+                                        <li><strong>Carbohydrate phức hợp:</strong> Chọn ngũ cốc nguyên hạt, yến mạch, khoai lang, gạo lứt để cung cấp năng lượng bền bỉ.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Chia nhỏ bữa ăn:</strong> Ăn 5-6 bữa nhỏ trong ngày thay vì 3 bữa lớn. Điều này giúp bạn không cảm thấy quá no và cơ thể dễ hấp thu dinh dưỡng hơn. Bổ sung các bữa phụ bằng sữa chua, sinh tố, các loại hạt.</li>
+                                <li><strong>Tập luyện để xây dựng cơ bắp:</strong> Đừng chỉ tập các bài cardio. Hãy kết hợp các bài tập kháng lực (nâng tạ, gym) dưới sự hướng dẫn của huấn luyện viên để đảm bảo cân nặng tăng lên là cơ bắp, không phải mỡ.</li>
+                             </ul>`,
+                    recommendation: 'Tăng cân lành mạnh là một quá trình đòi hỏi sự kiên nhẫn, đôi khi còn khó hơn giảm cân. Hãy đặt mục tiêu tăng từ 0.2 - 0.5 kg mỗi tuần. Theo dõi tiến trình, lắng nghe cơ thể và đừng ngần ngại tìm kiếm sự giúp đỡ từ chuyên gia dinh dưỡng.',
                     ctaText: 'Cần một lộ trình tăng cân an toàn và hiệu quả?',
                     ctaButton: 'Tư vấn ngay',
                     ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan'
@@ -264,9 +315,13 @@
                     text: 'Bình thường',
                     className: 'status-normal',
                     summary: 'Chúc mừng! Bạn đang ở mức cân nặng lý tưởng.',
-                    warning: 'Không có cảnh báo nào. Hãy tiếp tục duy trì lối sống lành mạnh này.',
-                    action: 'Duy trì thói quen tập luyện đều đặn và chế độ ăn uống cân bằng để giữ vững phong độ.',
-                    recommendation: 'Kết hợp đa dạng các loại hình tập luyện (cardio, kháng lực, dẻo dai) và ăn đủ các nhóm chất.',
+                    warning: 'AN TOÀN - LÝ TƯỞNG. Xin chúc mừng! Bạn đang ở trong ngưỡng cân nặng khỏe mạnh, giúp giảm thiểu nguy cơ mắc các bệnh mãn tính liên quan đến cân nặng. Đây là một thành tựu đáng tự hào.',
+                    action: `<ul>
+                                <li><strong>Duy trì và Phát huy:</strong> Mục tiêu chính của bạn bây giờ là duy trì lối sống tích cực này. Đừng xem đây là lý do để chủ quan.</li>
+                                <li><strong>Ăn uống cân bằng:</strong> Tiếp tục duy trì một chế độ ăn đa dạng, giàu rau xanh, trái cây, protein nạc và ngũ cốc nguyên hạt. Hãy chú ý đến việc kiểm soát lượng đường, muối và thực phẩm chế biến sẵn.</li>
+                                <li><strong>Vận động đều đặn:</strong> Duy trì ít nhất 150 phút hoạt động thể chất cường độ vừa phải mỗi tuần (như đi bộ nhanh, đạp xe, bơi lội).</li>
+                             </ul>`,
+                    recommendation: 'Chỉ số BMI bình thường không có nghĩa là bạn hoàn toàn khỏe mạnh. Hãy quan tâm thêm đến các yếu tố khác như tỷ lệ mỡ/cơ, số đo vòng eo, chất lượng giấc ngủ và sức khỏe tinh thần. Đây là giai đoạn vàng để củng cố các thói quen tốt, tạo nền tảng vững chắc cho sức khỏe lâu dài.',
                     ctaText: 'Bạn muốn nâng cao thể lực và vóc dáng hơn nữa?',
                     ctaButton: 'Khám phá các dịch vụ',
                     ctaLinkHref: 'index.html'
@@ -276,9 +331,16 @@
                     text: 'Thừa cân',
                     className: 'status-overweight',
                     summary: 'Bạn nên xem xét việc giảm cân để cải thiện sức khỏe.',
-                    warning: 'Thừa cân làm tăng nguy cơ mắc các bệnh về tim mạch, tiểu đường type 2 và các vấn đề về xương khớp.',
-                    action: 'Bắt đầu bằng việc kiểm soát lượng calo nạp vào và tăng cường hoạt động thể chất. Cardio kết hợp tập kháng lực là lựa chọn tối ưu.',
-                    recommendation: 'Ưu tiên thực phẩm nguyên chất, giàu chất xơ, giảm đường và chất béo bão hòa. Uống đủ nước và ngủ đủ giấc.',
+                    warning: 'CẢNH BÁO VÀNG - CẦN CAN THIỆP. Đây là "đèn vàng" trên hành trình sức khỏe của bạn. Bạn chưa bị béo phì, nhưng cơ thể đã bắt đầu tích trữ mỡ thừa ở mức có thể gây hại. Nguy cơ phát triển các bệnh như cao huyết áp, mỡ máu, kháng insulin (tiền tiểu đường) và bệnh tim mạch đã bắt đầu tăng lên.',
+                    action: `<ul>
+                                <li><strong>HÀNH ĐỘNG NGAY, ĐỪNG CHẦN CHỪ:</strong> Đây là thời điểm tốt nhất để thay đổi. Việc giảm một vài kg ở giai đoạn này sẽ dễ dàng và hiệu quả hơn rất nhiều so với khi đã bị béo phì.</li>
+                                <li><strong>Rà soát lại chế độ ăn:</strong> Ghi lại nhật ký ăn uống trong 3-5 ngày để xem bạn đang ăn gì. Thường thì vấn đề nằm ở đồ ăn vặt, nước ngọt, đồ ăn nhanh và khẩu phần ăn quá lớn.</li>
+                                <li><strong>Cắt giảm:</strong> Đường, đồ uống có cồn, thực phẩm chiên rán, tinh bột tinh chế (bánh mì trắng, bún, phở).</li>
+                                <li><strong>Tăng cường:</strong> Chất xơ từ rau củ, salad, trái cây ít ngọt để bạn no lâu hơn. Uống đủ nước.</li>
+                                <li><strong>Tăng cường vận động:</strong> Nếu bạn chưa vận động, hãy bắt đầu bằng 30 phút đi bộ mỗi ngày. Nếu đã có, hãy tăng dần thời gian hoặc cường độ. Kết hợp cả cardio (đốt mỡ) và tập kháng lực (xây dựng cơ để tăng cường trao đổi chất).</li>
+                                <li><strong>Kiểm soát khẩu phần:</strong> Ăn bằng bát/đĩa nhỏ hơn. Ăn chậm, nhai kỹ. Dừng lại khi cảm thấy no khoảng 80%.</li>
+                             </ul>`,
+                    recommendation: 'Hãy đặt mục tiêu giảm cân thực tế và bền vững, khoảng 5-10% trọng lượng cơ thể trong 6 tháng. Sự thay đổi nhỏ nhưng nhất quán sẽ tạo ra kết quả lớn.',
                     ctaText: 'Bắt đầu hành trình giảm cân của bạn ngay hôm nay!',
                     ctaButton: 'Đăng ký huấn luyện',
                     ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan'
@@ -288,54 +350,47 @@
                     text: 'Béo phì',
                     className: 'status-obese',
                     summary: 'Mức cân nặng của bạn có nguy cơ cao ảnh hưởng đến sức khỏe.',
-                    warning: 'Béo phì là yếu tố nguy cơ cao đối với nhiều bệnh mãn tính nguy hiểm. Cần có kế hoạch can thiệp sớm.',
-                    action: 'Cần có một kế hoạch giảm cân rõ ràng và bền vững dưới sự giám sát. Tập trung vào việc thay đổi lối sống toàn diện.',
-                    recommendation: 'Hãy tham khảo ý kiến chuyên gia để có một chế độ ăn uống và tập luyện an toàn, phù hợp với thể trạng.',
+                    warning: 'BÁO ĐỘNG ĐỎ - NGUY HIỂM. Đây không còn là vấn đề về ngoại hình, mà là một TÌNH TRẠNG BỆNH LÝ cần được can thiệp y tế nghiêm túc. Mỗi cấp độ béo phì tăng lên, nguy cơ mắc các bệnh nguy hiểm như tiểu đường type 2, bệnh tim mạch, đột quỵ, ngưng thở khi ngủ, bệnh xương khớp và một số loại ung thư sẽ tăng theo cấp số nhân.',
+                    action: `<ul>
+                                <li><strong>TÌM KIẾM SỰ TRỢ GIÚP Y TẾ CHUYÊN NGHIỆP:</strong> Bạn không nên chiến đấu một mình. Hãy đến gặp bác sĩ để được đánh giá sức khỏe tổng thể, làm các xét nghiệm cần thiết (đường huyết, mỡ máu, chức năng gan, tim mạch...). Bác sĩ và chuyên gia dinh dưỡng sẽ xây dựng một phác đồ điều trị an toàn và phù hợp cho bạn.</li>
+                                <li><strong>Thay đổi dinh dưỡng toàn diện:</strong> Bạn cần một kế hoạch ăn uống có cấu trúc chặt chẽ, được cá nhân hóa, tạo ra sự thâm hụt calo an toàn. Điều này đòi hỏi phải loại bỏ gần như hoàn toàn thực phẩm công nghiệp, đồ ngọt, chất béo chuyển hóa và kiểm soát chặt chẽ khẩu phần ăn.</li>
+                                <li><strong>Vận động có hướng dẫn:</strong> Bắt đầu từ từ với các bài tập cường độ thấp và ít tác động lên khớp như đi bộ, bơi lội, đạp xe tại chỗ. Khi thể lực cải thiện, bạn có thể tăng dần cường độ dưới sự giám sát để tránh chấn thương, đặc biệt là các vấn đề về khớp gối và cột sống.</li>
+                                <li><strong>Can thiệp tâm lý:</strong> Đôi khi ăn uống quá độ liên quan đến các vấn đề tâm lý như căng thẳng, trầm cảm. Việc tư vấn tâm lý có thể giúp giải quyết gốc rễ của vấn đề.</li>
+                                <li><strong>Cân nhắc các phương pháp khác:</strong> Đối với béo phì độ II, III, nếu việc thay đổi lối sống không hiệu quả, bác sĩ có thể thảo luận về việc sử dụng thuốc hoặc các phương pháp can thiệp ngoại khoa.</li>
+                             </ul>`,
+                    recommendation: 'Hành trình thoát khỏi béo phì là một con đường dài và đầy thử thách, đòi hỏi sự quyết tâm sắt đá. Hãy tập trung vào mục tiêu cải thiện sức khỏe, không chỉ là con số trên bàn cân. Mỗi kg giảm được đều là một chiến thắng lớn cho trái tim, mạch máu và toàn bộ cơ thể của bạn.',
                     ctaText: 'Nhận sự hỗ trợ chuyên nghiệp để thay đổi cuộc sống!',
                     ctaButton: 'Liên hệ chuyên gia',
                     ctaLinkHref: 'dang-ky.html'
                 };
             }
         }
-        // =================================================
-
+        
         calculateBtn.addEventListener('click', () => {
             const ageInput = document.getElementById('age');
             const heightInput = document.getElementById('height');
             const weightInput = document.getElementById('weight');
-
-            // Kiểm tra các trường bắt buộc
             if (!ageInput.value || !heightInput.value || !weightInput.value) {
                 alert('Vui lòng điền đầy đủ thông tin Tuổi, Chiều cao và Cân nặng.');
                 return;
             }
-
             calculateBtn.disabled = true;
             calculateBtn.textContent = 'Đang tính toán...';
-
-            // Hiển thị kết quả sau một khoảng trễ nhỏ để tạo hiệu ứng
             setTimeout(() => {
                 welcomePanel.style.display = 'none';
                 resultsContainer.classList.add('visible');
-
                 const age = parseInt(ageInput.value);
                 const gender = document.querySelector('input[name="gender"]:checked').value;
                 const height = parseInt(heightInput.value);
                 const weight = parseFloat(weightInput.value);
                 const activityMultiplier = parseFloat(document.getElementById('activity').value);
                 const bodyFat = parseFloat(document.getElementById('bodyfat').value);
-
-                // --- Tính toán BMI ---
                 const bmi = (weight / ((height / 100) * (height / 100)));
                 const bmiStatus = getBmiStatus(bmi);
-                
-                // --- Tính toán BMR & TDEE ---
                 let bmr = 0;
                 if (bodyFat && bodyFat > 0) {
-                    // Công thức Katch-McArdle (nếu có body fat)
                     bmr = 370 + (21.6 * (weight * (1 - bodyFat / 100)));
                 } else {
-                    // Công thức Mifflin-St Jeor (phổ biến và chính xác hơn)
                     if (gender === 'male') {
                         bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
                     } else {
@@ -343,35 +398,23 @@
                     }
                 }
                 const tdee = bmr * activityMultiplier;
-                
-                // --- Cập nhật giao diện ---
-
-                // 1. BMI Card
                 const bmiValueEl = document.getElementById('bmi-value');
                 const bmiInterpretationEl = document.getElementById('bmi-interpretation');
                 const bmiProgressValue = document.getElementById('bmi-progress-value');
-                
                 animateDecimal(bmiValueEl, 0, bmi, 1500);
                 bmiInterpretationEl.textContent = bmiStatus.text;
                 bmiInterpretationEl.className = bmiStatus.className;
                 document.getElementById('bmi-summary-text').textContent = bmiStatus.summary;
-
                 const bmiPercent = Math.min(100, Math.max(0, ((bmi - 15) / (35 - 15)) * 100));
                 setTimeout(() => {
                     bmiProgressValue.style.width = `${bmiPercent}%`;
                     bmiProgressValue.style.backgroundColor = `var(--${bmiStatus.className})`;
                 }, 100);
-                
-                // 2. TDEE/BMR Card
                 animateValue(document.getElementById('tdee-value'), 0, Math.round(tdee), 1500);
                 animateValue(document.getElementById('bmr-value'), 0, Math.round(bmr), 1500);
-
-                // 3. Advice Card
-                document.getElementById('bmi-warning').textContent = bmiStatus.warning;
-                document.getElementById('bmi-action').textContent = bmiStatus.action;
-                document.getElementById('bmi-recommendation').textContent = bmiStatus.recommendation;
-                
-                // 4. Macros Card
+                document.getElementById('bmi-warning').innerHTML = bmiStatus.warning;
+                document.getElementById('bmi-action').innerHTML = bmiStatus.action;
+                document.getElementById('bmi-recommendation').innerHTML = bmiStatus.recommendation;
                 const macroGoals = {
                     "Giảm cân (thâm hụt ~15%)": tdee - (tdee * 0.15),
                     "Duy trì": tdee,
@@ -381,10 +424,9 @@
                 macroResultsBody.innerHTML = '';
                 for (const goal in macroGoals) {
                     const calories = macroGoals[goal];
-                    const protein = Math.round(weight * 2); // Gợi ý 2g protein / kg cân nặng
-                    const fat = Math.round((calories * 0.25) / 9); // 25% calo từ fat
+                    const protein = Math.round(weight * 2);
+                    const fat = Math.round((calories * 0.25) / 9);
                     const carbs = Math.round((calories - (protein * 4) - (fat * 9)) / 4);
-                    
                     macroResultsBody.innerHTML += `
                         <tr>
                             <td class="goal-col">${goal}</td>
@@ -395,16 +437,20 @@
                         </tr>
                     `;
                 }
-
-                // 5. CTA Card
                 document.getElementById('cta-text').textContent = bmiStatus.ctaText;
                 document.getElementById('cta-link').textContent = bmiStatus.ctaButton;
                 document.getElementById('cta-link').href = bmiStatus.ctaLinkHref;
-
                 calculateBtn.disabled = false;
                 calculateBtn.textContent = 'Phân Tích Lại';
             }, 500);
         });
+
+        const modal = document.getElementById('qr-modal');
+        const donateButton = document.getElementById('donate-button');
+        const closeButton = document.querySelector('.close-button');
+        donateButton.onclick = function() { modal.style.display = "block"; }
+        closeButton.onclick = function() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
     </script>
 </body>
 </html>
