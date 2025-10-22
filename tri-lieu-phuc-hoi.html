@@ -24,9 +24,18 @@
         .wrapper { max-width: 1100px; margin: 0 auto; }
         .main-header { background: var(--light-color); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .logo { font-size: 1.8em; font-weight: 700; color: var(--dark-color); text-decoration: none; }
-        .main-nav a { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; }
-        .main-nav a:hover { background-color: var(--gray-bg); color: var(--primary-color); }
-        .main-nav a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        .main-nav { display: flex; align-items: center; }
+        .main-nav a, .dropdown-btn { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; cursor: pointer; }
+        .main-nav a:hover, .dropdown-btn:hover { background-color: var(--gray-bg); color: var(--primary-color); }
+        .main-nav a.active, .dropdown-btn.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: var(--light-color); min-width: 220px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1); z-index: 1; border-radius: var(--border-radius); margin-top: 10px; padding: 5px 0; border: 1px solid #eee; }
+        .dropdown-content a { color: var(--dark-color); padding: 12px 16px; text-decoration: none; display: block; margin-left: 0; border-radius: 0; font-size: 0.95em; }
+        .dropdown-content a:hover { background-color: var(--gray-bg); }
+        .dropdown-content a.active { background-color: #e6f2ff; color: var(--primary-color); }
+        .dropdown:hover .dropdown-content { display: block; }
+        
         .hero { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); text-align: center; padding: 80px 20px; }
         .hero h1 { font-size: 3em; margin-bottom: 10px; }
         .hero p { font-size: 1.2em; opacity: 0.9; }
@@ -47,18 +56,34 @@
         .btn-register { display: inline-block; background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); padding: 8px 18px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9em; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .btn-register:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 123, 255, 0.25); }
         footer { text-align: center; padding: 30px; background-color: var(--dark-color); color: var(--light-color); margin-top: 40px;}
+
+        @media (max-width: 900px) {
+            .main-header { flex-direction: column; gap: 15px; }
+            .main-nav { flex-direction: column; width: 100%; gap: 10px; }
+            .main-nav a, .dropdown { margin-left: 0; width: 100%; text-align: center; }
+            .dropdown-content { display: none; position: static; box-shadow: none; border: none; background-color: var(--gray-bg); width: 100%; padding-top: 10px; }
+            .dropdown:hover .dropdown-content, .dropdown-btn:focus + .dropdown-content { display: flex; flex-direction: column; gap: 5px; }
+            .dropdown-content a { background-color: var(--light-color); border-radius: 8px; }
+            .dropdown-content a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        }
     </style>
 </head>
 <body>
     <header class="main-header">
         <a href="index.html" class="logo">9isBalance</a>
         <nav class="main-nav">
-            <a href="index.html">HL Cá nhân</a>
-            <a href="huan-luyen-nang-cao.html">HL Nâng cao</a>
-            <a href="tri-lieu-phuc-hoi.html" class="active">Trị liệu & Phục hồi</a>
-            <a href="tu-van-online.html">Tư vấn Online</a>
-	    <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
+            <div class="dropdown">
+                <span class="dropdown-btn active">Dịch vụ ▼</span>
+                <div class="dropdown-content">
+                    <a href="index.html">HL Cá nhân</a>
+                    <a href="huan-luyen-nang-cao.html">HL Nâng cao</a>
+                    <a href="tri-lieu-phuc-hoi.html" class="active">Trị liệu & Phục hồi</a>
+                    <a href="tu-van-online.html">Tư vấn Online</a>
+                </div>
+            </div>
+            <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
             <a href="gioi-thieu.html">Về tôi</a>
+            <a href="dang-ky.html">Đăng ký</a>
         </nav>
     </header>
 
