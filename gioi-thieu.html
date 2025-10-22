@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Về Người Sáng Lập - 9isBalance</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/59qtkKWY/AVA-BETA.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #00C6FF;
+            --dark-color: #2c3e50;
+            --light-color: #ffffff;
+            --gray-bg: #f8f9fa;
+            --text-color: #4a4a4a;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+        .wrapper { max-width: 1100px; margin: 0 auto; }
+        .main-header {
+            background: var(--light-color);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 1.8em; font-weight: 700; color: var(--dark-color); text-decoration: none; }
+        .main-nav a { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; }
+        .main-nav a:hover { background-color: var(--gray-bg); color: var(--primary-color); }
+        .main-nav a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        
+        .about-hero { padding: 60px 20px; display: flex; align-items: center; gap: 50px; background: var(--light-color); }
+        .profile-pic-container { flex-shrink: 0; }
+        .profile-pic { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 8px solid var(--gray-bg); box-shadow: var(--shadow); }
+        .intro-text h1 { font-size: 3em; color: var(--dark-color); margin-bottom: 5px; }
+        .intro-text .founder-title { font-size: 1.5em; font-weight: 600; color: var(--primary-color); margin-bottom: 20px; }
+        .intro-text .mission-statement { font-size: 1.1em; font-style: italic; border-left: 4px solid var(--secondary-color); padding-left: 20px; }
+        
+        .page-content { padding: 50px 20px; }
+        
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .journey-col, .philosophy-col { display: flex; flex-direction: column; gap: 30px; }
+        
+        .card { background: var(--light-color); border-radius: var(--border-radius); padding: 30px; box-shadow: var(--shadow); }
+        .card h3 { font-size: 1.6em; color: var(--dark-color); margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid var(--gray-bg); display: flex; align-items: center; }
+        .card h3 span { margin-right: 15px; font-size: 1.5em; color: var(--primary-color); }
+        
+        .timeline { position: relative; }
+        .timeline-item { position: relative; padding-left: 40px; padding-bottom: 25px; }
+        .timeline-item:not(:last-child)::before { content: ''; position: absolute; left: 10px; top: 5px; width: 2px; height: 100%; background-color: #e0e0e0; }
+        .timeline-item::after { content: ''; position: absolute; left: 2px; top: 5px; width: 18px; height: 18px; background-color: var(--light-color); border: 3px solid var(--primary-color); border-radius: 50%; }
+        .timeline-item .date { font-weight: 600; color: var(--primary-color); font-size: 0.9em; }
+        .timeline-item .title { font-weight: 600; font-size: 1.1em; color: var(--dark-color); }
+        .timeline-item .company { color: #777; }
+        
+        .philosophy-list li { margin-bottom: 20px; }
+        .philosophy-list strong { color: var(--dark-color); }
+        
+        .cta-section { text-align: center; padding: 50px 20px; background: var(--light-color); margin-top: 40px; }
+        .cta-section h2 { font-size: 2em; color: var(--dark-color); margin-bottom: 20px; }
+        .cta-button { display: inline-block; background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 600; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3); }
+
+        footer { text-align: center; padding: 30px; background-color: var(--dark-color); color: var(--light-color); }
+        
+        @media (max-width: 900px) {
+            .about-hero { flex-direction: column; text-align: center; }
+            .intro-text .mission-statement { border-left: none; padding-left: 0; }
+            .about-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" class="logo">9isBalance</a>
+        <nav class="main-nav">
+            <a href="index.html">Trang chủ</a>
+            <a href="gioi-thieu.html" class="active">Về tôi</a>
+	    <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
+            <a href="dang-ky.html">Đăng ký</a>
+        </nav>
+    </header>
+
+    <div class="wrapper">
+        <section class="about-hero">
+            <div class="profile-pic-container">
+                <img src="https://i.postimg.cc/hPNCFNVY/1758994107663.png" alt="Đinh Trọng Hiếu" class="profile-pic">
+            </div>
+            <div class="intro-text">
+                <h1>Đinh Trọng Hiếu</h1>
+                <p class="founder-title">Nhà Sáng Lập 9isBalance</p>
+                <blockquote class="mission-statement">
+                    "Mục tiêu của tôi là đóng góp và nâng cao ý thức bảo vệ sức khỏe cá nhân cũng như cộng đồng cho tất cả mọi người xung quanh."
+                </blockquote>
+            </div>
+        </section>
+
+        <main class="page-content">
+            <div class="about-grid">
+                <div class="journey-col">
+                    <div class="card">
+                        <h3><span>🎓</span>Nền Tảng Khoa Học & Chuyên Môn</h3>
+                        <ul>
+                            <li><strong>Cử nhân Y Sinh học TDTT:</strong> Đại học TDTT TP.HCM (2018 - 2022).</li>
+                            <li><strong>Personal Trainer:</strong> Chứng nhận bởi Viet Nam Fitness Academy (2018).</li>
+                            <li><strong>Kinesio Taping:</strong> Chứng nhận bởi Procoach Training Systems (2019).</li>
+                            <li><strong>Thành tựu nổi bật:</strong> Giải nhất Bài báo Khoa học khối các Trường TDTT.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3><span>💼</span>Hành Trình Thực Tiễn</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <p class="date">2023 - Hiện tại</p>
+                                <p class="title">Coach</p>
+                                <p class="company">Trường Mầm non Vinschool Imperia Hải Phòng</p>
+                            </div>
+                            <div class="timeline-item">
+                                <p class="date">2022 - 2023</p>
+                                <p class="title">Physical Performance Coach</p>
+                                <p class="company">Trung tâm Đào tạo Bóng đá trẻ PVF</p>
+                            </div>
+                            <div class="timeline-item">
+                                <p class="date">2021 - 2022</p>
+                                <p class="title">Sports Advisor</p>
+                                <p class="company">Decathlon Viet Nam</p>
+                            </div>
+                            <div class="timeline-item">
+                                <p class="date">2020</p>
+                                <p class="title">Instructor</p>
+                                <p class="company">Kyros Massage Therapy</p>
+                            </div>
+                             <div class="timeline-item">
+                                <p class="date">2017 - 2018</p>
+                                <p class="title">Instructor</p>
+                                <p class="company">Bảo Ngọc Gym</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="philosophy-col">
+                    <div class="card">
+                        <h3><span>💡</span>Triết Lý Huấn Luyện</h3>
+                        <ul class="philosophy-list">
+                            <li><strong>Nhận thức Vận động:</strong> Tôi tin rằng học hỏi hiệu quả nhất là qua trải nghiệm. Mọi chương trình đều tập trung vào việc thực hiện động tác chuẩn xác và cảm nhận cơ thể.</li>
+                            <li><strong>Nhận thức Tương tác:</strong> Sức mạnh của sự kết nối là không thể thiếu. Tôi xây dựng một môi trường tập luyện tích cực, nơi chúng ta là một đội và cùng nhau đạt mục tiêu.</li>
+                            <li><strong>Nhận thức Nội tâm:</strong> Hiểu rõ bản thân là chìa khóa để vượt qua giới hạn. Tôi khuyến khích bạn lắng nghe cơ thể và tự đánh giá tiến trình của mình.</li>
+                            <li><strong>Nhận thức Thiên nhiên:</strong> Kết hợp các hoạt động ngoài trời vào quá trình tập luyện không chỉ giúp cải thiện thể chất mà còn làm giàu thêm đời sống tinh thần.</li>
+                        </ul>
+                    </div>
+                     <div class="card">
+                        <h3><span>❤️</span>Ngoài Công Việc</h3>
+                        <p>Khi không làm việc, bạn có thể tìm thấy tôi đang đọc một cuốn sách hay, khám phá những cung đường mới, cắm trại dưới bầu trời sao, hoặc cổ vũ hết mình cho đội bóng Arsenal.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <section class="cta-section">
+        <h2>Bạn đã sẵn sàng để bắt đầu?</h2>
+        <p>Hãy cùng tôi xây dựng một phiên bản khỏe mạnh và cân bằng hơn của chính bạn.</p>
+        <a href="dang-ky.html" class="cta-button">Đăng Ký Tư Vấn Ngay</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 9isBalance - Sáng lập bởi Đinh Trọng Hiếu.</p>
+    </footer>
+
+</body>
+</html>

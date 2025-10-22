@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tư vấn Online - 9isBalance</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/59qtkKWY/AVA-BETA.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #00C6FF;
+            --dark-color: #2c3e50;
+            --light-color: #ffffff;
+            --gray-bg: #f8f9fa;
+            --text-color: #4a4a4a;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Be Vietnam Pro', sans-serif; background-color: var(--gray-bg); color: var(--text-color); line-height: 1.7; }
+        .wrapper { max-width: 1100px; margin: 0 auto; }
+        .main-header { background: var(--light-color); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .logo { font-size: 1.8em; font-weight: 700; color: var(--dark-color); text-decoration: none; }
+        .main-nav a { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; }
+        .main-nav a:hover { background-color: var(--gray-bg); color: var(--primary-color); }
+        .main-nav a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        .hero { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); text-align: center; padding: 80px 20px; }
+        .hero h1 { font-size: 3em; margin-bottom: 10px; }
+        .hero p { font-size: 1.2em; opacity: 0.9; }
+        .page-content { padding: 50px 20px; }
+        .card { background: var(--light-color); border-radius: var(--border-radius); padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
+        .card h2 { font-size: 1.8em; color: var(--dark-color); margin-bottom: 20px; }
+        .card ul { list-style: none; }
+        .card ul li { padding-left: 35px; position: relative; margin-bottom: 15px; }
+        .card ul li::before { content: '✓'; color: var(--primary-color); font-weight: 700; position: absolute; left: 0; font-size: 1.5em; top: -3px; }
+        .pricing-table h2 { text-align: center; margin-bottom: 40px; }
+        table { width: 100%; border-collapse: collapse; text-align: center; font-size: 0.95em; }
+        th, td { padding: 15px; }
+        thead { background-color: var(--dark-color); color: var(--light-color); }
+        tbody tr:nth-of-type(even) { background-color: var(--gray-bg); }
+        .savings { color: #28a745; font-weight: 600; }
+        .btn-register { display: inline-block; background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); padding: 8px 18px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.9em; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .btn-register:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 123, 255, 0.25); }
+        footer { text-align: center; padding: 30px; background-color: var(--dark-color); color: var(--light-color); margin-top: 40px;}
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" class="logo">9isBalance</a>
+        <nav class="main-nav">
+            <a href="index.html">HL Cá nhân</a>
+            <a href="huan-luyen-nang-cao.html">HL Nâng cao</a>
+            <a href="tri-lieu-phuc-hoi.html">Trị liệu & Phục hồi</a>
+            <a href="tu-van-online.html" class="active">Tư vấn Online</a>
+	    <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
+            <a href="gioi-thieu.html">Về tôi</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Tư vấn & Thiết kế Chương trình từ xa</h1>
+        <p>Lộ trình tập luyện chuyên nghiệp, dù bạn ở bất cứ đâu.</p>
+    </section>
+
+    <div class="page-content wrapper">
+        <div class="card">
+            <h2>💻 Chi tiết Dịch vụ</h2>
+            <ul>
+                <li>Cung cấp lộ trình tập luyện chi tiết và tư vấn online cho những khách hàng không có điều kiện tập luyện trực tiếp.</li>
+            </ul>
+        </div>
+
+        <div class="card pricing-table">
+            <h2>📈 Bảng giá Dịch vụ</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Số buổi (Check-in/Tư vấn)</th>
+                        <th>Tổng chi phí (VNĐ)</th>
+                        <th>Chi phí / buổi</th>
+                        <th>Tiết kiệm</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5</td><td>1.500.000</td><td>300.000</td><td>-</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=5" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>10</td><td>2.800.000</td><td>280.000</td><td class="savings">7%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=10" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>15</td><td>4.050.000</td><td>270.000</td><td class="savings">10%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=15" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>20</td><td>5.200.000</td><td>260.000</td><td class="savings">13%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=20" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>30</td><td>7.500.000</td><td>250.000</td><td class="savings">17%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=30" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>60</td><td>14.400.000</td><td>240.000</td><td class="savings">20%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=60" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>90</td><td>20.700.000</td><td>230.000</td><td class="savings">23%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=90" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                    <tr>
+                        <td>100</td><td>22.000.000</td><td>220.000</td><td class="savings">27%</td>
+                        <td><a href="dang-ky.html?service=tu-van-online&package=100" class="btn-register">Đăng ký</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer><p>&copy; 2025 9isBalance - Dịch vụ Chăm sóc Sức khỏe & Vận động Toàn diện.</p></footer>
+</body>
+</html>

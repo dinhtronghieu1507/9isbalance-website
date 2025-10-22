@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Dịch Vụ - 9isBalance</title>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/59qtkKWY/AVA-BETA.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #00C6FF;
+            --dark-color: #2c3e50;
+            --light-color: #ffffff;
+            --gray-bg: #f8f9fa;
+            --text-color: #4a4a4a;
+            --success-color: #28a745;
+            --border-radius: 12px;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--gray-bg);
+            color: var(--text-color);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .wrapper { max-width: 700px; margin: 40px auto; width: 100%; padding: 20px; }
+        .main-header { text-align: center; margin-bottom: 30px; }
+        .logo { font-size: 2.5em; font-weight: 700; color: var(--dark-color); text-decoration: none; }
+        .form-container { background: var(--light-color); border-radius: var(--border-radius); padding: 40px; box-shadow: var(--shadow); }
+        .form-container h1 { text-align: center; color: var(--dark-color); font-size: 2em; margin-bottom: 10px; }
+        .form-container .subtitle { text-align: center; color: #777; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-family: 'Be Vietnam Pro', sans-serif;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); }
+        .form-row { display: flex; gap: 20px; }
+        .form-row .form-group { flex: 1; }
+        textarea { resize: vertical; min-height: 120px; }
+        
+        /* CSS MỚI: Khu vực hiển thị giá được thiết kế lại */
+        .price-display {
+            background-color: var(--gray-bg);
+            border-radius: var(--border-radius);
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 10px;
+        }
+        .price-item {
+            text-align: center;
+            flex: 1;
+        }
+        .price-item .label {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--dark-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+        .price-item .value {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+        #total-price {
+            color: var(--primary-color);
+        }
+        #savings-display {
+            color: var(--success-color);
+        }
+        #savings-display small {
+            font-size: 0.6em;
+            font-weight: 400;
+            display: block;
+            opacity: 0.8;
+        }
+        
+        .cta-button {
+            width: 100%;
+            display: inline-block;
+            background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3); }
+        footer { text-align: center; padding: 30px; color: #777; margin-top: auto; }
+        @media (max-width: 768px) {
+            .form-row { flex-direction: column; gap: 0; }
+            .form-container { padding: 30px; }
+            .wrapper { margin: 20px auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header wrapper">
+        <a href="index.html" class="logo">9isBalance</a>
+    </header>
+
+    <main class="wrapper">
+        <div class="form-container">
+            <h1>Đăng Ký Dịch Vụ</h1>
+            <p class="subtitle">Vui lòng điền thông tin bên dưới, chúng tôi sẽ liên hệ lại với bạn sớm nhất.</p>
+            
+            <form action="https://formspree.io/f/mpwyedra" method="POST">
+                
+                <div class="form-group">
+                    <label for="fullName">Họ và Tên</label>
+                    <input type="text" id="fullName" name="Họ và Tên" placeholder="Ví dụ: Nguyễn Văn An" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Số Điện Thoại</label>
+                        <input type="tel" id="phone" name="Số Điện Thoại" placeholder="09xxxxxxxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="Email" placeholder="email@example.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="service">Dịch Vụ Quan Tâm</label>
+                    <select id="service" name="Dịch vụ" required>
+                        <option value="" disabled selected>-- Vui lòng chọn dịch vụ --</option>
+                        <option value="hl-ca-nhan">Huấn luyện Thể hình & Sức khỏe Cá nhân</option>
+                        <option value="hl-nang-cao">Huấn luyện Thể lực Nâng cao cho Vận động viên</option>
+                        <option value="tri-lieu-phuc-hoi">Trị liệu Cơ bắp & Phục hồi Chuyên sâu</option>
+                        <option value="tu-van-online">Tư vấn & Thiết kế Chương trình từ xa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="package">Gói Buổi Tập Mong Muốn</label>
+                    <select id="package" name="Gói buổi tập" required>
+                        <option value="" disabled selected>-- Vui lòng chọn gói --</option>
+                        <option value="1">1 Buổi (Trị liệu & Phục hồi)</option>
+                        <option value="5">Gói 5 Buổi</option>
+                        <option value="10">Gói 10 Buổi</option>
+                        <option value="15">Gói 15 Buổi</option>
+                        <option value="20">Gói 20 Buổi</option>
+                        <option value="30">Gói 30 Buổi</option>
+                        <option value="60">Gói 60 Buổi</option>
+                        <option value="90">Gói 90 Buổi</option>
+                        <option value="100">Gói 100 Buổi</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Ghi Chú (nếu có)</label>
+                    <textarea id="notes" name="Ghi chú" placeholder="Bạn có câu hỏi hoặc yêu cầu đặc biệt nào không? (Ví dụ: Tình trạng chấn thương, khung giờ có thể tập,...)"></textarea>
+                </div>
+                
+                <div class="price-display">
+                    <div class="price-item">
+                        <span class="label">Tổng chi phí</span>
+                        <span class="value" id="total-price">...</span>
+                    </div>
+                    <div class="price-item">
+                        <span class="label">Tiết kiệm</span>
+                        <span class="value" id="savings-display">-</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="cta-button">Gửi Đăng Ký</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 9isBalance - Dịch vụ Chăm sóc Sức khỏe & Vận động Toàn diện.</p>
+    </footer>
+
+    <script>
+        // ===== DỮ LIỆU MỚI: Bảng giá gốc cho 1 buổi =====
+        const basePrices = {
+            "hl-ca-nhan": 600000,
+            "hl-nang-cao": 800000,
+            "tri-lieu-phuc-hoi": 300000,
+            "tu-van-online": 300000,
+        };
+
+        const priceList = {
+            "hl-ca-nhan_5": 3000000, "hl-ca-nhan_10": 5800000, "hl-ca-nhan_15": 8400000, "hl-ca-nhan_20": 10800000, "hl-ca-nhan_30": 15600000, "hl-ca-nhan_60": 30000000, "hl-ca-nhan_90": 43200000, "hl-ca-nhan_100": 47000000,
+            "hl-nang-cao_5": 4000000, "hl-nang-cao_10": 7800000, "hl-nang-cao_15": 11400000, "hl-nang-cao_20": 14800000, "hl-nang-cao_30": 21600000, "hl-nang-cao_60": 42000000, "hl-nang-cao_90": 61200000, "hl-nang-cao_100": 67000000,
+            "tri-lieu-phuc-hoi_1": 300000, "tri-lieu-phuc-hoi_5": 1400000, "tri-lieu-phuc-hoi_10": 2700000, "tri-lieu-phuc-hoi_15": 3900000, "tri-lieu-phuc-hoi_20": 5000000, "tri-lieu-phuc-hoi_30": 7200000, "tri-lieu-phuc-hoi_60": 13800000, "tri-lieu-phuc-hoi_90": 19800000, "tri-lieu-phuc-hoi_100": 21000000,
+            "tu-van-online_5": 1500000, "tu-van-online_10": 2800000, "tu-van-online_15": 4050000, "tu-van-online_20": 5200000, "tu-van-online_30": 7500000, "tu-van-online_60": 14400000, "tu-van-online_90": 20700000, "tu-van-online_100": 22000000,
+        };
+
+        const serviceSelect = document.getElementById('service');
+        const packageSelect = document.getElementById('package');
+        const priceDisplayElement = document.getElementById('total-price');
+        const savingsDisplayElement = document.getElementById('savings-display');
+
+        function updatePrice() {
+            let service = serviceSelect.value;
+            const packageSize = packageSelect.value;
+
+            if (packageSize === '1') {
+                service = 'tri-lieu-phuc-hoi'; 
+                serviceSelect.value = 'tri-lieu-phuc-hoi'; 
+            }
+
+            if (service && packageSize) {
+                const key = `${service}_${packageSize}`;
+                const packagePrice = priceList[key];
+                const basePrice = basePrices[service];
+
+                if (packagePrice !== undefined && basePrice !== undefined) {
+                    priceDisplayElement.textContent = `${packagePrice.toLocaleString('vi-VN')} VNĐ`;
+                    
+                    // Tính toán và hiển thị % tiết kiệm
+                    const fullPrice = basePrice * parseInt(packageSize);
+                    const savedAmount = fullPrice - packagePrice;
+
+                    if (savedAmount > 0) {
+                        const savingsPercentage = Math.round((savedAmount / fullPrice) * 100);
+                        savingsDisplayElement.innerHTML = `${savingsPercentage}% <small>(${savedAmount.toLocaleString('vi-VN')} VNĐ)</small>`;
+                    } else {
+                        savingsDisplayElement.innerHTML = '-';
+                    }
+
+                } else {
+                    priceDisplayElement.textContent = '...';
+                    savingsDisplayElement.innerHTML = '-';
+                }
+            } else {
+                priceDisplayElement.textContent = '...';
+                savingsDisplayElement.innerHTML = '-';
+            }
+        }
+
+        serviceSelect.addEventListener('change', updatePrice);
+        packageSelect.addEventListener('change', updatePrice);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const serviceParam = params.get('service');
+            const packageParam = params.get('package');
+
+            if (serviceParam) {
+                if (serviceSelect) serviceSelect.value = serviceParam;
+            }
+            if (packageParam) {
+                if (packageSelect) packageSelect.value = packageParam;
+            }
+            
+            updatePrice();
+        });
+    </script>
+
+</body>
+</html>
