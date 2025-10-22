@@ -36,10 +36,17 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         .logo { font-size: 1.8em; font-weight: 700; color: var(--dark-color); text-decoration: none; }
-        .main-nav a { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; }
-        .main-nav a:hover { background-color: var(--gray-bg); color: var(--primary-color); }
-        .main-nav a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        .main-nav { display: flex; align-items: center; }
+        .main-nav a, .dropdown-btn { text-decoration: none; color: var(--dark-color); margin-left: 25px; font-weight: 600; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; cursor: pointer; }
+        .main-nav a:hover, .dropdown-btn:hover { background-color: var(--gray-bg); color: var(--primary-color); }
+        .main-nav a.active, .dropdown-btn.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
         
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: var(--light-color); min-width: 220px; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1); z-index: 1; border-radius: var(--border-radius); margin-top: 10px; padding: 5px 0; border: 1px solid #eee; }
+        .dropdown-content a { color: var(--dark-color); padding: 12px 16px; text-decoration: none; display: block; margin-left: 0; border-radius: 0; font-size: 0.95em; }
+        .dropdown-content a:hover { background-color: var(--gray-bg); }
+        .dropdown:hover .dropdown-content { display: block; }
+
         .about-hero { padding: 60px 20px; display: flex; align-items: center; gap: 50px; background: var(--light-color); }
         .profile-pic-container { flex-shrink: 0; }
         .profile-pic { width: 250px; height: 250px; border-radius: 50%; object-fit: cover; border: 8px solid var(--gray-bg); box-shadow: var(--shadow); }
@@ -74,43 +81,34 @@
 
         footer { text-align: center; padding: 30px; background-color: var(--dark-color); color: var(--light-color); }
         
-                /* ===== CSS CHO THIẾT BỊ DI ĐỘNG (ĐÃ TỐI ƯU) ===== */
         @media (max-width: 900px) {
-            .app-grid, .results-container { 
-                grid-template-columns: 1fr; /* Chuyển thành 1 cột */
-            }
-            .advice-card, .macros-card, .cta-card { 
-                grid-column: auto; /* Xóa thuộc tính gộp cột */
-            }
-            .main-header { 
-                flex-direction: column; /* Xếp logo và menu theo chiều dọc */
-                gap: 20px;
-                padding-bottom: 20px;
-            }
-            .main-nav {
-                display: flex;
-                flex-wrap: wrap; /* Cho phép menu xuống dòng nếu không đủ chỗ */
-                justify-content: center;
-                gap: 10px;
-            }
-            .main-nav a {
-                margin-left: 0; /* Xóa khoảng cách trái của menu */
-            }
-            .card {
-                padding: 20px; /* Giảm padding cho card */
-            }
-            .calculator-form h1 {
-                font-size: 1.6em; /* Giảm cỡ chữ tiêu đề */
-            }
+            .about-hero { flex-direction: column; text-align: center; }
+            .about-grid { grid-template-columns: 1fr; }
+            .main-header { flex-direction: column; gap: 15px; }
+            .main-nav { flex-direction: column; width: 100%; gap: 10px; }
+            .main-nav a, .dropdown { margin-left: 0; width: 100%; text-align: center; }
+            .dropdown-content { display: none; position: static; box-shadow: none; border: none; background-color: var(--gray-bg); width: 100%; padding-top: 10px; }
+            .dropdown:hover .dropdown-content, .dropdown-btn:focus + .dropdown-content { display: flex; flex-direction: column; gap: 5px; }
+            .dropdown-content a { background-color: var(--light-color); border-radius: 8px; }
+            .dropdown-content a.active { background-image: linear-gradient(to right, var(--primary-color), var(--secondary-color)); color: var(--light-color); }
+        }
     </style>
 </head>
 <body>
     <header class="main-header">
         <a href="index.html" class="logo">9isBalance</a>
         <nav class="main-nav">
-            <a href="index.html">Trang chủ</a>
+            <div class="dropdown">
+                <span class="dropdown-btn">Dịch vụ ▼</span>
+                <div class="dropdown-content">
+                    <a href="index.html">HL Cá nhân</a>
+                    <a href="huan-luyen-nang-cao.html">HL Nâng cao</a>
+                    <a href="tri-lieu-phuc-hoi.html">Trị liệu & Phục hồi</a>
+                    <a href="tu-van-online.html">Tư vấn Online</a>
+                </div>
+            </div>
+            <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
             <a href="gioi-thieu.html" class="active">Về tôi</a>
-	    <a href="cong-cu-tinh-toan.html">Công cụ Sức khỏe</a>
             <a href="dang-ky.html">Đăng ký</a>
         </nav>
     </header>
@@ -136,8 +134,9 @@
                         <h3><span>🎓</span>Nền Tảng Khoa Học & Chuyên Môn</h3>
                         <ul>
                             <li><strong>Cử nhân Y Sinh học TDTT:</strong> Đại học TDTT TP.HCM (2018 - 2022).</li>
+                            <li><strong>Y sĩ Y học Cổ Truyền</strong> (2022 - 2024).</li>
                             <li><strong>Personal Trainer:</strong> Chứng nhận bởi Viet Nam Fitness Academy (2018).</li>
-                            <li><strong>Kinesio Taping:</strong> Chứng nhận bởi Procoach Training Systems (2019).</li>
+                            <li><strong>Kinesio Taping:</strong> Chứng nhận bởi Kinesio Taping Vietnam (2019).</li>
                             <li><strong>Thành tựu nổi bật:</strong> Giải nhất Bài báo Khoa học khối các Trường TDTT.</li>
                         </ul>
                     </div>
