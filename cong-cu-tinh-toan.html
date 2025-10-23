@@ -8,15 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-098Y1X0LPH"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-098Y1X0LPH');
-    </script>
     <style>
         :root {
             --primary-color: #007BFF;
@@ -33,6 +24,7 @@
             --status-obese: #e74c3c;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
             background-color: var(--gray-bg);
@@ -56,8 +48,7 @@
         .dropdown-content a:hover { background-color: #f1f1f1; }
         .dropdown:hover .dropdown-content { display: block; }
         
-        .app-grid { display: grid; grid-template-columns: 380px 1fr; gap: 30px; align-items: flex-start; }
-        .card { background: var(--light-color); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 30px; }
+        .card { background: var(--light-color); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 30px; margin-bottom: 30px; }
         
         .calculator-form h1 { font-size: 1.8em; font-weight: 800; color: var(--dark-color); margin-bottom: 25px; }
         .form-group { margin-bottom: 18px; }
@@ -71,52 +62,63 @@
         .btn { padding: 14px 30px; border: none; border-radius: 50px; font-size: 1.1em; font-weight: 700; cursor: pointer; transition: all 0.3s ease; width: 100%; background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: var(--light-color); box-shadow: 0 8px 20px rgba(0, 123, 255, 0.3); margin-top: 10px; }
         .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0, 123, 255, 0.4); }
         .btn:disabled { background-image: none; background-color: #bdc3c7; cursor: not-allowed; box-shadow: none; transform: none; }
-
-        .results-container { display: none; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .results-container.visible { display: grid; }
+        
+        .results-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-bottom: 30px;}
         .result-card { background: var(--light-color); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 25px; animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
+        .results-dashboard .result-card { display: flex; flex-direction: column; justify-content: center; text-align: center; }
         .result-card h3 { font-size: 1.1em; font-weight: 700; color: var(--dark-color); margin-bottom: 15px; text-align: center; }
         
-        .bmi-card-content { text-align: center; }
-        .bmi-main-result { display: flex; justify-content: center; align-items: baseline; margin-bottom: 15px; }
         #bmi-value { font-size: 4em; font-weight: 800; line-height: 1; }
         #bmi-interpretation { font-weight: 700; font-size: 1.5em; margin-left: 10px; }
         .bmi-progress-bar { height: 10px; background-color: #eef5f9; border-radius: 10px; overflow: hidden; position: relative; }
         #bmi-progress-value { height: 100%; width: 0; border-radius: 10px; transition: width 1.5s ease-out, background-color 0.5s ease; }
-        .bmi-summary { font-size: 0.9em; margin-top: 10px; }
         
-        .calories-card { background: rgba(44, 62, 80, 0.8); backdrop-filter: blur(10px); color: var(--light-color); display: flex; flex-direction: column; justify-content: center; }
-        .tdee-main { text-align: center; margin-bottom: 20px; }
-        .tdee-main .icon { font-size: 2em; line-height: 1; opacity: 0.8; }
+        .calories-card { background: rgba(44, 62, 80, 0.8); backdrop-filter: blur(10px); color: var(--light-color); justify-content: space-around; }
+        .tdee-main, .bmr-secondary { text-align: center; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .tdee-main { padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .bmr-secondary { padding-top: 15px; }
+        .calories-card .icon { font-size: 2.2em; line-height: 1; margin-bottom: 8px; opacity: 0.9; }
         .tdee-main .value { font-size: 3.5em; font-weight: 800; color: var(--light-color); line-height: 1.1; }
-        .tdee-main .label { font-size: 0.9em; opacity: 0.8; font-weight: 600; }
-        .bmr-secondary { text-align: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; }
-        .bmr-secondary .value { font-size: 1.8em; font-weight: 700; }
-        .bmr-secondary .label { font-size: 0.9em; opacity: 0.7; }
+        .bmr-secondary .value { font-size: 2.2em; font-weight: 700; }
 
-        .advice-card { grid-column: 1 / -1; }
-        .macros-card, .cta-card { grid-column: 1 / -1; }
+        .range-display { display: flex; justify-content: center; align-items: baseline; gap: 15px; margin-top: 10px; }
+        .weight-value span { font-size: 2.5em; font-weight: 800; color: var(--primary-color); }
+        .weight-value small { font-size: 1.2em; font-weight: 700; color: var(--dark-color); margin-left: 5px; }
+        .range-separator { font-size: 2em; font-weight: 600; color: var(--text-color); }
+        #weight-range-card p { text-align: center; margin-bottom: 5px;}
+
         .detail-item { margin-bottom: 25px; }
         .detail-item p, .detail-item ul { font-size: 0.95em; opacity: 0.9; line-height: 1.7; }
         .detail-item ul { list-style-position: inside; padding-left: 10px;}
         .detail-item-title { font-size: 1.1em; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; }
         .detail-item-title span { margin-right: 12px; font-size: 1.2em; }
-        .tdee-macro-table { width: 100%; border-collapse: collapse; text-align: center; }
-        .tdee-macro-table th, .tdee-macro-table td { padding: 12px; border-bottom: 1px solid var(--gray-bg); }
-        .tdee-macro-table th { font-weight: 700; font-size: 0.9em; }
-        .tdee-macro-table tr:last-child td { border: none; }
-        .tdee-macro-table .goal-col { font-weight: 600; }
+        
+        .macros-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .macro-card { border: 1px solid #f0f4f8; border-radius: var(--border-radius); padding: 20px; text-align: center; background-color: #f8f9fa; }
+        .macro-card h4 { font-size: 1.2em; margin-bottom: 10px; }
+        .macro-calories { font-size: 2.5em; font-weight: 800; color: var(--primary-color); line-height: 1.1; }
+        .macro-calories span { font-size: 0.5em; font-weight: 600; color: var(--text-color); }
+        .macro-details-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 20px; border-top: 1px solid #eef5f9; padding-top: 15px; }
+        .macro-detail-item { font-size: 0.9em; }
+        .macro-detail-item strong { display: block; font-size: 1.4em; color: var(--dark-color); }
+        
+        .accordion-item { border-bottom: 1px solid #f0f4f8; }
+        .accordion-item:last-child { border-bottom: none; }
+        .accordion-header { background: none; border: none; width: 100%; text-align: left; padding: 18px 5px; font-size: 1.1em; font-weight: 700; color: var(--dark-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .accordion-header:hover { background-color: #f8f9fa; }
+        .accordion-header .zone-title { display: flex; align-items: center; }
+        .accordion-icon { font-size: 1.4em; font-weight: 600; transition: transform 0.3s ease; }
+        .accordion-header.active .accordion-icon { transform: rotate(45deg); }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding: 0 15px; font-size: 0.95em; }
+        .accordion-content .content-inner { padding-bottom: 20px; }
+        .accordion-content p, .accordion-content ul { margin-bottom: 15px; }
+        .accordion-content ul { padding-left: 20px; }
+        .accordion-content strong { color: var(--dark-color); }
+        .zone-color { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 12px; }
         
         .cta-card { background-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: var(--light-color); text-align: center; }
-        .cta-card p { margin-bottom: 15px; font-size: 1.1em; }
-        .cta-btn { text-decoration: none; color: var(--primary-color); background: var(--light-color); padding: 10px 25px; border-radius: 50px; font-weight: 700; transition: all 0.3s ease; }
-        .cta-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        .hidden { display: none; }
-
-        /* ===== CSS CHO POP-UP ỦNG HỘ ===== */
         .modal-overlay { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); animation: fadeIn 0.3s; }
         .modal-content { background-color: #fff; margin: 10% auto; padding: 25px; border-radius: var(--border-radius); width: 90%; max-width: 400px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideIn 0.4s ease-out; }
         @keyframes slideIn { from {transform: translateY(-50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
@@ -125,8 +127,7 @@
         .close-button:hover, .close-button:focus { color: #333; text-decoration: none; cursor: pointer; }
         
         @media (max-width: 900px) {
-            .app-grid, .results-container { grid-template-columns: 1fr; }
-            .advice-card, .macros-card, .cta-card { grid-column: auto; }
+            .app-grid, .results-dashboard { grid-template-columns: 1fr; }
             .main-header { flex-direction: column; gap: 15px; }
             .main-nav { flex-direction: column; width: 100%; gap: 10px; }
             .main-nav a, .dropdown { margin-left: 0; width: 100%; text-align: center; }
@@ -159,8 +160,8 @@
             </nav>
         </header>
 
-        <div class="app-grid">
-            <div class="card calculator-form">
+        <div id="main-content">
+            <div class="card calculator-form" id="analysis-form">
                 <h1>Phân Tích Sức Khỏe Toàn Diện</h1>
                 <div class="form-group"><label for="gender"><span>👤</span>Giới tính</label><div class="input-radio-group"><label><input type="radio" name="gender" value="male" checked> Nam</label><label><input type="radio" name="gender" value="female"> Nữ</label></div></div>
                 <div class="form-group"><label for="age"><span>🎂</span>Tuổi</label><input type="number" id="age" class="input-text" placeholder="Nhập tuổi của bạn" min="15" max="100"></div>
@@ -177,77 +178,71 @@
                         <option value="1.9">Vận động rất nhiều (cường độ cao & công việc thể chất)</option>
                     </select>
                 </div>
-                <button id="calculate-btn" class="btn">Phân Tích Ngay</button>
-            </div>
-            
-            <div class="right-panel">
-                <div class="card welcome-panel" id="welcome-panel">
-                    <div class="icon" style="font-size: 3.5em; line-height: 1; margin-bottom: 15px; background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">💡</div>
-                    <h2 style="font-size: 1.5em; font-weight: 700; color: var(--dark-color); margin-bottom: 10px;">Bắt đầu Hành trình Sức khỏe</h2>
-                    <p style="margin-bottom: 20px;">Nhập các thông số của bạn để nhận một bản phân tích toàn diện và những lời khuyên được cá nhân hóa, giúp bạn hiểu rõ hơn về cơ thể mình.</p>
-                    <h3 style="font-size: 1.1em; font-weight: 700; color: var(--dark-color); margin-bottom: 10px;">Bạn sẽ nhận được:</h3>
-                    <ul style="list-style: none; padding-left: 0; text-align: left;">
-                        <li style="margin-bottom: 10px; font-weight: 600; display: flex; align-items: center;"><span style="color: var(--primary-color); font-weight: 800; margin-right: 10px;">✓</span>Chỉ số BMI & Tình trạng cơ thể</li>
-                        <li style="margin-bottom: 10px; font-weight: 600; display: flex; align-items: center;"><span style="color: var(--primary-color); font-weight: 800; margin-right: 10px;">✓</span>Năng lượng tiêu thụ hàng ngày (TDEE)</li>
-                        <li style="margin-bottom: 10px; font-weight: 600; display: flex; align-items: center;"><span style="color: var(--primary-color); font-weight: 800; margin-right: 10px;">✓</span>Lời khuyên chi tiết từ chuyên gia</li>
-                        <li style="margin-bottom: 10px; font-weight: 600; display: flex; align-items: center;"><span style="color: var(--primary-color); font-weight: 800; margin-right: 10px;">✓</span>Gợi ý Macros cho từng mục tiêu</li>
-                    </ul>
-                </div>
-
-                <div class="results-container" id="results-container">
-                    <div class="result-card bmi-card-content">
-                        <h3>Chỉ số BMI</h3>
-                        <div class="bmi-main-result">
-                            <span id="bmi-value">--</span>
-                            <span id="bmi-interpretation"></span>
-                        </div>
-                        <div class="bmi-progress-bar">
-                            <div id="bmi-progress-value"></div>
-                        </div>
-                        <p class="bmi-summary" id="bmi-summary-text"></p>
-                    </div>
-                    <div class="result-card calories-card">
-                        <div class="tdee-main"><div class="icon">🔥</div><div class="value" id="tdee-value">--</div><div class="label">TDEE (Năng lượng Duy trì)</div></div>
-                        <div class="bmr-secondary"><div class="label">❤️ Năng lượng Cơ bản (BMR)</div><div class="value" id="bmr-value">--</div></div>
-                    </div>
-                    <div class="result-card advice-card">
-                        <h3>Lời khuyên dành cho bạn</h3>
-                        <div class="detail-item">
-                            <h4 class="detail-item-title"><span>🚨</span>Mức độ cảnh báo</h4>
-                            <p id="bmi-warning"></p>
-                        </div>
-                        <div class="detail-item">
-                            <h4 class="detail-item-title"><span>💪</span>Lời khuyên hành động</h4>
-                            <div id="bmi-action"></div>
-                        </div>
-                        <div class="detail-item">
-                            <h4 class="detail-item-title"><span>🥗</span>Khuyến nghị chung</h4>
-                            <p id="bmi-recommendation"></p>
-                        </div>
-                    </div>
-                    <div class="result-card macros-card">
-                        <h3>Bảng Macros Gợi ý</h3>
-                        <table class="tdee-macro-table">
-                            <thead><tr><th>Mục tiêu</th><th>Calo</th><th>Protein (g)</th><th>Carbs (g)</th><th>Fat (g)</th></tr></thead>
-                            <tbody id="macro-results-body"></tbody>
-                        </table>
-                    </div>
-                    <div class="result-card cta-card" id="cta-card">
-                        <p id="cta-text"></p>
-                        <a href="dang-ky.html" id="cta-link" class="cta-btn"></a>
-                    </div>
-                </div>
+                <hr style="border: 0; border-top: 1px solid #f0f4f8; margin: 25px 0;">
+                <h3 style="font-size: 1.3em; font-weight: 700; color: var(--dark-color); margin-bottom: 15px;">Phân tích Nhịp tim (Tùy chọn)</h3>
+                <div class="form-group"><label for="hr-resting"><span>❤️</span>Nhịp tim lúc nghỉ (bpm)</label><input type="number" id="hr-resting" class="input-text" placeholder="Đo vào buổi sáng sau khi thức dậy để có kết quả tốt nhất" min="30" max="120"></div>
+                <button id="calculate-btn" class="btn">Phân Tích Toàn Diện</button>
             </div>
         </div>
 
-        <div style="background: linear-gradient(45deg, #eef5f9, #d9e8f6); margin-top: 30px; text-align: center; padding: 40px 25px; border-radius: var(--border-radius); animation: fadeIn 0.5s ease-out forwards;">
+        <div id="results-area" style="display: none; margin-top: 30px;">
+            <div class="results-dashboard">
+                <div class="result-card">
+                    <h3>Chỉ số BMI</h3>
+                    <div class="bmi-main-result"> <span id="bmi-value">--</span> <span id="bmi-interpretation"></span> </div>
+                    <div class="bmi-progress-bar"> <div id="bmi-progress-value"></div> </div>
+                    <p class="bmi-summary" id="bmi-summary-text"></p>
+                </div>
+                <div class="result-card calories-card">
+                    <div class="tdee-main"><div class="icon">🔥</div><div class="value" id="tdee-value">--</div><div class="label">TDEE</div></div>
+                    <div class="bmr-secondary"><div class="icon">❤️</div><div class="value" id="bmr-value">--</div><div class="label">BMR</div></div>
+                </div>
+                <div class="result-card" id="weight-range-card">
+                    <h3>Khoảng Cân Nặng Lý Tưởng</h3>
+                    <p>Dựa trên chiều cao của bạn:</p>
+                    <div class="range-display">
+                        <div class="weight-value"><span id="min-weight">--</span><small>kg</small></div>
+                        <div class="range-separator">-</div>
+                        <div class="weight-value"><span id="max-weight">--</span><small>kg</small></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card result-card" id="hr-analysis-card" style="display: none;">
+                <h1 style="text-align: center;">Phân Tích Chuyên Sâu Vùng Nhịp Tim</h1>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 25px;">Chào bạn, với hơn 30 năm nghiên cứu và ứng dụng nhịp tim trong huấn luyện, tôi rất sẵn lòng chia sẻ những phân tích chuyên sâu về các vùng nhịp tim. Đây là chìa khóa để tập luyện thông minh, tối ưu hóa hiệu suất và phòng tránh chấn thương.</p>
+                <div id="hr-accordion-container"></div>
+            </div>
+
+            <div class="card result-card" style="margin-bottom: 30px;">
+                <h1>Phân Tích & Lời khuyên BMI</h1>
+                <div class="detail-item"> <h4 class="detail-item-title"><span>🚨</span>Mức độ cảnh báo</h4> <p id="bmi-warning"></p> </div>
+                <div class="detail-item"> <h4 class="detail-item-title"><span>💪</span>Lời khuyên hành động</h4> <div id="bmi-action"></div> </div>
+                <div class="detail-item" style="margin-bottom: 0;"> <h4 class="detail-item-title"><span>🥗</span>Khuyến nghị chung</h4> <p id="bmi-recommendation"></p> </div>
+            </div>
+            
+             <div class="card result-card" style="margin-bottom: 30px;">
+                 <h3>Bảng Macros Gợi ý</h3>
+                 <div class="macros-grid" id="macros-results-container"></div>
+             </div>
+             
+             <div class="app-grid" style="align-items: stretch;">
+                 <div class="result-card" style="text-align: center; background-color: #f0f4f8; border: 2px dashed #dfe6e9; display: flex; flex-direction: column; justify-content: center;">
+                      <p style="font-weight: 600; font-size: 1.1em; color: var(--dark-color); margin-bottom: 10px;">Thấy công cụ này hữu ích?<br>Hãy chia sẻ với bạn bè!</p>
+                      <button id="share-button" class="btn" style="width: auto; display: inline-block; padding: 10px 25px; font-size: 1em;"> 🔗 Sao chép Link Chia sẻ </button>
+                      <p id="copy-success-msg" style="color: var(--status-normal); font-weight: bold; margin-top: 10px; display: none;">Đã sao chép!</p>
+                  </div>
+                 <div class="result-card cta-card" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+                     <p id="cta-text"></p>
+                     <a href="dang-ky.html" id="cta-link" class="cta-btn" style="width: auto; display: inline-block;"></a>
+                 </div>
+             </div>
+        </div>
+
+        <div style="background: linear-gradient(45deg, #eef5f9, #d9e8f6); margin-top: 30px; text-align: center; padding: 40px 25px; border-radius: var(--border-radius);">
             <h3 style="font-size: 1.6em; color: var(--dark-color); margin-bottom: 15px;">Thấy công cụ này hữu ích?</h3>
-            <p style="max-width: 600px; margin: 0 auto 25px; font-size: 1.05em; line-height: 1.7; opacity: 0.85;">
-                Sự ủng hộ của bạn, dù là nhỏ nhất, cũng là động lực lớn giúp tôi duy trì và phát triển thêm nhiều công cụ miễn phí khác cho cộng đồng.
-            </p>
-            <button id="donate-button" class="btn" style="display: inline-block; width: auto; text-decoration: none; padding: 12px 30px;">
-                Mời tôi một ly cà phê ☕
-            </button>
+            <p style="max-width: 600px; margin: 0 auto 25px; font-size: 1.05em; line-height: 1.7; opacity: 0.85;">Sự ủng hộ của bạn, dù là nhỏ nhất, cũng là động lực lớn giúp tôi duy trì và phát triển thêm nhiều công cụ miễn phí khác cho cộng đồng.</p>
+            <button id="donate-button" class="btn" style="display: inline-block; width: auto; text-decoration: none; padding: 12px 30px;">Mời tôi một ly cà phê ☕</button>
         </div>
         
         <p style="text-align: center; margin-top: 20px; font-size: 0.9em; color: #7f8c8d;">Lưu ý: Các kết quả tính toán chỉ mang tính chất tham khảo. Hãy liên hệ chuyên gia để có lời khuyên chính xác nhất.</p>
@@ -257,211 +252,153 @@
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h4 style="margin-bottom: 15px; font-size: 1.2em;">Quét mã để ủng hộ</h4>
-            <img src="https://i.postimg.cc/CMt81Z5n/TCB-QR-STORE-202522294958.jpg" alt="Mã QR ủng hộ">
+            <img src="https://i.postimg.cc/JhBny201/qr-code.png" alt="Mã QR ủng hộ">
         </div>
     </div>
     
     <script>
         const calculateBtn = document.getElementById('calculate-btn');
-        const welcomePanel = document.getElementById('welcome-panel');
-        const resultsContainer = document.getElementById('results-container');
-
-        // ===============================================
-        // ===== BẮT ĐẦU CÁC HÀM JAVASCRIPT ĐẦY ĐỦ =====
-        // ===============================================
-        function animateValue(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                element.textContent = Math.floor(progress * (end - start) + start).toLocaleString('vi-VN');
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function animateDecimal(element, start, end, duration) {
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                element.textContent = (progress * (end - start) + start).toFixed(1);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        function getBmiStatus(bmi) {
-            if (bmi < 18.5) {
-                return {
-                    text: 'Thiếu cân',
-                    className: 'status-underweight',
-                    summary: 'Cơ thể bạn đang không có đủ năng lượng và dưỡng chất.',
-                    warning: 'CAO ĐẾN BÁO ĐỘNG ĐỎ. Đây không phải là một vóc dáng "mảnh mai" đáng ao ước mà là một tình trạng sức khỏe đáng báo động. Cơ thể bạn đang không có đủ năng lượng và dưỡng chất để duy trì các chức năng sống cơ bản một cách tối ưu. Đặc biệt với BMI dưới 17 (Gầy độ II, III): Đây là mức BÁO ĐỘNG ĐỎ. Nguy cơ suy giảm hệ miễn dịch, loãng xương, rụng tóc, mất cơ, rối loạn nội tiết (ở phụ nữ có thể gây mất kinh), và suy nhược toàn thân là rất cao.',
-                    action: `<ul>
-                                <li><strong>Gặp chuyên gia y tế NGAY LẬP TỨC:</strong> Bước đầu tiên và quan trọng nhất là phải đi khám bác sĩ để loại trừ các nguyên nhân bệnh lý tiềm ẩn gây sụt cân hoặc khó tăng cân (ví dụ: bệnh về tuyến giáp, rối loạn tiêu hóa, nhiễm ký sinh trùng...).</li>
-                                <li><strong>Tăng cường dinh dưỡng CHẤT LƯỢNG:</strong> Mục tiêu không phải là ăn thật nhiều đồ ngọt hay chất béo bão hòa. Hãy tập trung tăng lượng calo từ các nguồn thực phẩm lành mạnh:
-                                    <ul>
-                                        <li><strong>Protein:</strong> Tăng cường thịt nạc, cá, trứng, sữa, các loại đậu, hạt để xây dựng lại khối cơ bắp đã mất.</li>
-                                        <li><strong>Chất béo tốt:</strong> Bổ sung quả bơ, dầu ô liu, các loại hạt (óc chó, hạnh nhân), cá béo (cá hồi, cá trích).</li>
-                                        <li><strong>Carbohydrate phức hợp:</strong> Chọn ngũ cốc nguyên hạt, yến mạch, khoai lang, gạo lứt để cung cấp năng lượng bền bỉ.</li>
-                                    </ul>
-                                </li>
-                                <li><strong>Chia nhỏ bữa ăn:</strong> Ăn 5-6 bữa nhỏ trong ngày thay vì 3 bữa lớn. Điều này giúp bạn không cảm thấy quá no và cơ thể dễ hấp thu dinh dưỡng hơn. Bổ sung các bữa phụ bằng sữa chua, sinh tố, các loại hạt.</li>
-                                <li><strong>Tập luyện để xây dựng cơ bắp:</strong> Đừng chỉ tập các bài cardio. Hãy kết hợp các bài tập kháng lực (nâng tạ, gym) dưới sự hướng dẫn của huấn luyện viên để đảm bảo cân nặng tăng lên là cơ bắp, không phải mỡ.</li>
-                             </ul>`,
-                    recommendation: 'Tăng cân lành mạnh là một quá trình đòi hỏi sự kiên nhẫn, đôi khi còn khó hơn giảm cân. Hãy đặt mục tiêu tăng từ 0.2 - 0.5 kg mỗi tuần. Theo dõi tiến trình, lắng nghe cơ thể và đừng ngần ngại tìm kiếm sự giúp đỡ từ chuyên gia dinh dưỡng.',
-                    ctaText: 'Cần một lộ trình tăng cân an toàn và hiệu quả?',
-                    ctaButton: 'Tư vấn ngay',
-                    ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan'
-                };
-            } else if (bmi >= 18.5 && bmi < 24.9) {
-                return {
-                    text: 'Bình thường',
-                    className: 'status-normal',
-                    summary: 'Chúc mừng! Bạn đang ở mức cân nặng lý tưởng.',
-                    warning: 'AN TOÀN - LÝ TƯỞNG. Xin chúc mừng! Bạn đang ở trong ngưỡng cân nặng khỏe mạnh, giúp giảm thiểu nguy cơ mắc các bệnh mãn tính liên quan đến cân nặng. Đây là một thành tựu đáng tự hào.',
-                    action: `<ul>
-                                <li><strong>Duy trì và Phát huy:</strong> Mục tiêu chính của bạn bây giờ là duy trì lối sống tích cực này. Đừng xem đây là lý do để chủ quan.</li>
-                                <li><strong>Ăn uống cân bằng:</strong> Tiếp tục duy trì một chế độ ăn đa dạng, giàu rau xanh, trái cây, protein nạc và ngũ cốc nguyên hạt. Hãy chú ý đến việc kiểm soát lượng đường, muối và thực phẩm chế biến sẵn.</li>
-                                <li><strong>Vận động đều đặn:</strong> Duy trì ít nhất 150 phút hoạt động thể chất cường độ vừa phải mỗi tuần (như đi bộ nhanh, đạp xe, bơi lội).</li>
-                             </ul>`,
-                    recommendation: 'Chỉ số BMI bình thường không có nghĩa là bạn hoàn toàn khỏe mạnh. Hãy quan tâm thêm đến các yếu tố khác như tỷ lệ mỡ/cơ, số đo vòng eo, chất lượng giấc ngủ và sức khỏe tinh thần. Đây là giai đoạn vàng để củng cố các thói quen tốt, tạo nền tảng vững chắc cho sức khỏe lâu dài.',
-                    ctaText: 'Bạn muốn nâng cao thể lực và vóc dáng hơn nữa?',
-                    ctaButton: 'Khám phá các dịch vụ',
-                    ctaLinkHref: 'index.html'
-                };
-            } else if (bmi >= 25 && bmi < 29.9) {
-                return {
-                    text: 'Thừa cân',
-                    className: 'status-overweight',
-                    summary: 'Bạn nên xem xét việc giảm cân để cải thiện sức khỏe.',
-                    warning: 'CẢNH BÁO VÀNG - CẦN CAN THIỆP. Đây là "đèn vàng" trên hành trình sức khỏe của bạn. Bạn chưa bị béo phì, nhưng cơ thể đã bắt đầu tích trữ mỡ thừa ở mức có thể gây hại. Nguy cơ phát triển các bệnh như cao huyết áp, mỡ máu, kháng insulin (tiền tiểu đường) và bệnh tim mạch đã bắt đầu tăng lên.',
-                    action: `<ul>
-                                <li><strong>HÀNH ĐỘNG NGAY, ĐỪNG CHẦN CHỪ:</strong> Đây là thời điểm tốt nhất để thay đổi. Việc giảm một vài kg ở giai đoạn này sẽ dễ dàng và hiệu quả hơn rất nhiều so với khi đã bị béo phì.</li>
-                                <li><strong>Rà soát lại chế độ ăn:</strong> Ghi lại nhật ký ăn uống trong 3-5 ngày để xem bạn đang ăn gì. Thường thì vấn đề nằm ở đồ ăn vặt, nước ngọt, đồ ăn nhanh và khẩu phần ăn quá lớn.</li>
-                                <li><strong>Cắt giảm:</strong> Đường, đồ uống có cồn, thực phẩm chiên rán, tinh bột tinh chế (bánh mì trắng, bún, phở).</li>
-                                <li><strong>Tăng cường:</strong> Chất xơ từ rau củ, salad, trái cây ít ngọt để bạn no lâu hơn. Uống đủ nước.</li>
-                                <li><strong>Tăng cường vận động:</strong> Nếu bạn chưa vận động, hãy bắt đầu bằng 30 phút đi bộ mỗi ngày. Nếu đã có, hãy tăng dần thời gian hoặc cường độ. Kết hợp cả cardio (đốt mỡ) và tập kháng lực (xây dựng cơ để tăng cường trao đổi chất).</li>
-                                <li><strong>Kiểm soát khẩu phần:</strong> Ăn bằng bát/đĩa nhỏ hơn. Ăn chậm, nhai kỹ. Dừng lại khi cảm thấy no khoảng 80%.</li>
-                             </ul>`,
-                    recommendation: 'Hãy đặt mục tiêu giảm cân thực tế và bền vững, khoảng 5-10% trọng lượng cơ thể trong 6 tháng. Sự thay đổi nhỏ nhưng nhất quán sẽ tạo ra kết quả lớn.',
-                    ctaText: 'Bắt đầu hành trình giảm cân của bạn ngay hôm nay!',
-                    ctaButton: 'Đăng ký huấn luyện',
-                    ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan'
-                };
-            } else {
-                return {
-                    text: 'Béo phì',
-                    className: 'status-obese',
-                    summary: 'Mức cân nặng của bạn có nguy cơ cao ảnh hưởng đến sức khỏe.',
-                    warning: 'BÁO ĐỘNG ĐỎ - NGUY HIỂM. Đây không còn là vấn đề về ngoại hình, mà là một TÌNH TRẠNG BỆNH LÝ cần được can thiệp y tế nghiêm túc. Mỗi cấp độ béo phì tăng lên, nguy cơ mắc các bệnh nguy hiểm như tiểu đường type 2, bệnh tim mạch, đột quỵ, ngưng thở khi ngủ, bệnh xương khớp và một số loại ung thư sẽ tăng theo cấp số nhân.',
-                    action: `<ul>
-                                <li><strong>TÌM KIẾM SỰ TRỢ GIÚP Y TẾ CHUYÊN NGHIỆP:</strong> Bạn không nên chiến đấu một mình. Hãy đến gặp bác sĩ để được đánh giá sức khỏe tổng thể, làm các xét nghiệm cần thiết (đường huyết, mỡ máu, chức năng gan, tim mạch...). Bác sĩ và chuyên gia dinh dưỡng sẽ xây dựng một phác đồ điều trị an toàn và phù hợp cho bạn.</li>
-                                <li><strong>Thay đổi dinh dưỡng toàn diện:</strong> Bạn cần một kế hoạch ăn uống có cấu trúc chặt chẽ, được cá nhân hóa, tạo ra sự thâm hụt calo an toàn. Điều này đòi hỏi phải loại bỏ gần như hoàn toàn thực phẩm công nghiệp, đồ ngọt, chất béo chuyển hóa và kiểm soát chặt chẽ khẩu phần ăn.</li>
-                                <li><strong>Vận động có hướng dẫn:</strong> Bắt đầu từ từ với các bài tập cường độ thấp và ít tác động lên khớp như đi bộ, bơi lội, đạp xe tại chỗ. Khi thể lực cải thiện, bạn có thể tăng dần cường độ dưới sự giám sát để tránh chấn thương, đặc biệt là các vấn đề về khớp gối và cột sống.</li>
-                                <li><strong>Can thiệp tâm lý:</strong> Đôi khi ăn uống quá độ liên quan đến các vấn đề tâm lý như căng thẳng, trầm cảm. Việc tư vấn tâm lý có thể giúp giải quyết gốc rễ của vấn đề.</li>
-                                <li><strong>Cân nhắc các phương pháp khác:</strong> Đối với béo phì độ II, III, nếu việc thay đổi lối sống không hiệu quả, bác sĩ có thể thảo luận về việc sử dụng thuốc hoặc các phương pháp can thiệp ngoại khoa.</li>
-                             </ul>`,
-                    recommendation: 'Hành trình thoát khỏi béo phì là một con đường dài và đầy thử thách, đòi hỏi sự quyết tâm sắt đá. Hãy tập trung vào mục tiêu cải thiện sức khỏe, không chỉ là con số trên bàn cân. Mỗi kg giảm được đều là một chiến thắng lớn cho trái tim, mạch máu và toàn bộ cơ thể của bạn.',
-                    ctaText: 'Nhận sự hỗ trợ chuyên nghiệp để thay đổi cuộc sống!',
-                    ctaButton: 'Liên hệ chuyên gia',
-                    ctaLinkHref: 'dang-ky.html'
-                };
-            }
-        }
+        const resultsArea = document.getElementById('results-area');
+        
+        function animateValue(element, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); element.textContent = Math.floor(progress * (end - start) + start).toLocaleString('vi-VN'); if (progress < 1) { window.requestAnimationFrame(step); } }; window.requestAnimationFrame(step); }
+        function animateDecimal(element, start, end, duration) { let startTimestamp = null; const step = (timestamp) => { if (!startTimestamp) startTimestamp = timestamp; const progress = Math.min((timestamp - startTimestamp) / duration, 1); element.textContent = (progress * (end - start) + start).toFixed(1); if (progress < 1) { window.requestAnimationFrame(step); } }; window.requestAnimationFrame(step); }
+        function getBmiStatus(bmi) { if (bmi < 18.5) { return { text: 'Thiếu cân', className: 'status-underweight', summary: 'Cơ thể bạn đang không có đủ năng lượng và dưỡng chất.', warning: 'CAO ĐẾN BÁO ĐỘNG ĐỎ. Đây không phải là một vóc dáng "mảnh mai" đáng ao ước mà là một tình trạng sức khỏe đáng báo động. Cơ thể bạn đang không có đủ năng lượng và dưỡng chất để duy trì các chức năng sống cơ bản một cách tối ưu. Đặc biệt với BMI dưới 17 (Gầy độ II, III): Đây là mức BÁO ĐỘNG ĐỎ. Nguy cơ suy giảm hệ miễn dịch, loãng xương, rụng tóc, mất cơ, rối loạn nội tiết (ở phụ nữ có thể gây mất kinh), và suy nhược toàn thân là rất cao.', action: `<ul><li><strong>Gặp chuyên gia y tế NGAY LẬP TỨC:</strong> Bước đầu tiên và quan trọng nhất là phải đi khám bác sĩ để loại trừ các nguyên nhân bệnh lý tiềm ẩn gây sụt cân hoặc khó tăng cân (ví dụ: bệnh về tuyến giáp, rối loạn tiêu hóa, nhiễm ký sinh trùng...).</li><li><strong>Tăng cường dinh dưỡng CHẤT LƯỢNG:</strong> Mục tiêu không phải là ăn thật nhiều đồ ngọt hay chất béo bão hòa. Hãy tập trung tăng lượng calo từ các nguồn thực phẩm lành mạnh:<ul><li><strong>Protein:</strong> Tăng cường thịt nạc, cá, trứng, sữa, các loại đậu, hạt để xây dựng lại khối cơ bắp đã mất.</li><li><strong>Chất béo tốt:</strong> Bổ sung quả bơ, dầu ô liu, các loại hạt (óc chó, hạnh nhân), cá béo (cá hồi, cá trích).</li><li><strong>Carbohydrate phức hợp:</strong> Chọn ngũ cốc nguyên hạt, yến mạch, khoai lang, gạo lứt để cung cấp năng lượng bền bỉ.</li></ul></li><li><strong>Chia nhỏ bữa ăn:</strong> Ăn 5-6 bữa nhỏ trong ngày thay vì 3 bữa lớn. Điều này giúp bạn không cảm thấy quá no và cơ thể dễ hấp thu dinh dưỡng hơn. Bổ sung các bữa phụ bằng sữa chua, sinh tố, các loại hạt.</li><li><strong>Tập luyện để xây dựng cơ bắp:</strong> Đừng chỉ tập các bài cardio. Hãy kết hợp các bài tập kháng lực (nâng tạ, gym) dưới sự hướng dẫn của huấn luyện viên để đảm bảo cân nặng tăng lên là cơ bắp, không phải mỡ.</li></ul>`, recommendation: 'Tăng cân lành mạnh là một quá trình đòi hỏi sự kiên nhẫn, đôi khi còn khó hơn giảm cân. Hãy đặt mục tiêu tăng từ 0.2 - 0.5 kg mỗi tuần. Theo dõi tiến trình, lắng nghe cơ thể và đừng ngần ngại tìm kiếm sự giúp đỡ từ chuyên gia dinh dưỡng.', ctaText: 'Cần một lộ trình tăng cân an toàn và hiệu quả?', ctaButton: 'Tư vấn ngay', ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan' }; } else if (bmi >= 18.5 && bmi < 24.9) { return { text: 'Bình thường', className: 'status-normal', summary: 'Chúc mừng! Bạn đang ở mức cân nặng lý tưởng.', warning: 'AN TOÀN - LÝ TƯỞNG. Xin chúc mừng! Bạn đang ở trong ngưỡng cân nặng khỏe mạnh, giúp giảm thiểu nguy cơ mắc các bệnh mãn tính liên quan đến cân nặng. Đây là một thành tựu đáng tự hào.', action: `<ul><li><strong>Duy trì và Phát huy:</strong> Mục tiêu chính của bạn bây giờ là duy trì lối sống tích cực này. Đừng xem đây là lý do để chủ quan.</li><li><strong>Ăn uống cân bằng:</strong> Tiếp tục duy trì một chế độ ăn đa dạng, giàu rau xanh, trái cây, protein nạc và ngũ cốc nguyên hạt. Hãy chú ý đến việc kiểm soát lượng đường, muối và thực phẩm chế biến sẵn.</li><li><strong>Vận động đều đặn:</strong> Duy trì ít nhất 150 phút hoạt động thể chất cường độ vừa phải mỗi tuần (như đi bộ nhanh, đạp xe, bơi lội).</li></ul>`, recommendation: 'Chỉ số BMI bình thường không có nghĩa là bạn hoàn toàn khỏe mạnh. Hãy quan tâm thêm đến các yếu tố khác như tỷ lệ mỡ/cơ, số đo vòng eo, chất lượng giấc ngủ và sức khỏe tinh thần. Đây là giai đoạn vàng để củng cố các thói quen tốt, tạo nền tảng vững chắc cho sức khỏe lâu dài.', ctaText: 'Bạn muốn nâng cao thể lực và vóc dáng hơn nữa?', ctaButton: 'Khám phá các dịch vụ', ctaLinkHref: 'index.html' }; } else if (bmi >= 25 && bmi < 29.9) { return { text: 'Thừa cân', className: 'status-overweight', summary: 'Bạn nên xem xét việc giảm cân để cải thiện sức khỏe.', warning: 'CẢNH BÁO VÀNG - CẦN CAN THIỆP. Đây là "đèn vàng" trên hành trình sức khỏe của bạn. Bạn chưa bị béo phì, nhưng cơ thể đã bắt đầu tích trữ mỡ thừa ở mức có thể gây hại. Nguy cơ phát triển các bệnh như cao huyết áp, mỡ máu, kháng insulin (tiền tiểu đường) và bệnh tim mạch đã bắt đầu tăng lên.', action: `<ul><li><strong>HÀNH ĐỘNG NGAY, ĐỪNG CHẦN CHỪ:</strong> Đây là thời điểm tốt nhất để thay đổi. Việc giảm một vài kg ở giai đoạn này sẽ dễ dàng và hiệu quả hơn rất nhiều so với khi đã bị béo phì.</li><li><strong>Rà soát lại chế độ ăn:</strong> Ghi lại nhật ký ăn uống trong 3-5 ngày để xem bạn đang ăn gì. Thường thì vấn đề nằm ở đồ ăn vặt, nước ngọt, đồ ăn nhanh và khẩu phần ăn quá lớn.</li><li><strong>Cắt giảm:</strong> Đường, đồ uống có cồn, thực phẩm chiên rán, tinh bột tinh chế (bánh mì trắng, bún, phở).</li><li><strong>Tăng cường:</strong> Chất xơ từ rau củ, salad, trái cây ít ngọt để bạn no lâu hơn. Uống đủ nước.</li><li><strong>Tăng cường vận động:</strong> Nếu bạn chưa vận động, hãy bắt đầu bằng 30 phút đi bộ mỗi ngày. Nếu đã có, hãy tăng dần thời gian hoặc cường độ. Kết hợp cả cardio (đốt mỡ) và tập kháng lực (xây dựng cơ để tăng cường trao đổi chất).</li><li><strong>Kiểm soát khẩu phần:</strong> Ăn bằng bát/đĩa nhỏ hơn. Ăn chậm, nhai kỹ. Dừng lại khi cảm thấy no khoảng 80%.</li></ul>`, recommendation: 'Hãy đặt mục tiêu giảm cân thực tế và bền vững, khoảng 5-10% trọng lượng cơ thể trong 6 tháng. Sự thay đổi nhỏ nhưng nhất quán sẽ tạo ra kết quả lớn.', ctaText: 'Bắt đầu hành trình giảm cân của bạn ngay hôm nay!', ctaButton: 'Đăng ký huấn luyện', ctaLinkHref: 'dang-ky.html?service=hl-ca-nhan' }; } else { return { text: 'Béo phì', className: 'status-obese', summary: 'Mức cân nặng của bạn có nguy cơ cao ảnh hưởng đến sức khỏe.', warning: 'BÁO ĐỘNG ĐỎ - NGUY HIỂM. Đây không còn là vấn đề về ngoại hình, mà là một TÌNH TRẠNG BỆNH LÝ cần được can thiệp y tế nghiêm túc. Mỗi cấp độ béo phì tăng lên, nguy cơ mắc các bệnh nguy hiểm như tiểu đường type 2, bệnh tim mạch, đột quỵ, ngưng thở khi ngủ, bệnh xương khớp và một số loại ung thư sẽ tăng theo cấp số nhân.', action: `<ul><li><strong>TÌM KIẾM SỰ TRỢ GIÚP Y TẾ CHUYÊN NGHIỆP:</strong> Bạn không nên chiến đấu một mình. Hãy đến gặp bác sĩ để được đánh giá sức khỏe tổng thể, làm các xét nghiệm cần thiết (đường huyết, mỡ máu, chức năng gan, tim mạch...). Bác sĩ và chuyên gia dinh dưỡng sẽ xây dựng một phác đồ điều trị an toàn và phù hợp cho bạn.</li><li><strong>Thay đổi dinh dưỡng toàn diện:</strong> Bạn cần một kế hoạch ăn uống có cấu trúc chặt chẽ, được cá nhân hóa, tạo ra sự thâm hụt calo an toàn. Điều này đòi hỏi phải loại bỏ gần như hoàn toàn thực phẩm công nghiệp, đồ ngọt, chất béo chuyển hóa và kiểm soát chặt chẽ khẩu phần ăn.</li><li><strong>Vận động có hướng dẫn:</strong> Bắt đầu từ từ với các bài tập cường độ thấp và ít tác động lên khớp như đi bộ, bơi lội, đạp xe tại chỗ. Khi thể lực cải thiện, bạn có thể tăng dần cường độ dưới sự giám sát để tránh chấn thương, đặc biệt là các vấn đề về khớp gối và cột sống.</li><li><strong>Can thiệp tâm lý:</strong> Đôi khi ăn uống quá độ liên quan đến các vấn đề tâm lý như căng thẳng, trầm cảm. Việc tư vấn tâm lý có thể giúp giải quyết gốc rễ của vấn đề.</li><li><strong>Cân nhắc các phương pháp khác:</strong> Đối với béo phì độ II, III, nếu việc thay đổi lối sống không hiệu quả, bác sĩ có thể thảo luận về việc sử dụng thuốc hoặc các phương pháp can thiệp ngoại khoa.</li></ul>`, recommendation: 'Hành trình thoát khỏi béo phì là một con đường dài và đầy thử thách, đòi hỏi sự quyết tâm sắt đá. Hãy tập trung vào mục tiêu cải thiện sức khỏe, không chỉ là con số trên bàn cân. Mỗi kg giảm được đều là một chiến thắng lớn cho trái tim, mạch máu và toàn bộ cơ thể của bạn.', ctaText: 'Nhận sự hỗ trợ chuyên nghiệp để thay đổi cuộc sống!', ctaButton: 'Liên hệ chuyên gia', ctaLinkHref: 'dang-ky.html' }; } }
         
         calculateBtn.addEventListener('click', () => {
             const ageInput = document.getElementById('age');
             const heightInput = document.getElementById('height');
             const weightInput = document.getElementById('weight');
             if (!ageInput.value || !heightInput.value || !weightInput.value) {
-                alert('Vui lòng điền đầy đủ thông tin Tuổi, Chiều cao và Cân nặng.');
+                alert('Vui lòng điền đầy đủ thông tin Tuổi, Chiều cao và Cân nặng để phân tích.');
                 return;
             }
-            calculateBtn.disabled = true;
-            calculateBtn.textContent = 'Đang tính toán...';
-            setTimeout(() => {
-                welcomePanel.style.display = 'none';
-                resultsContainer.classList.add('visible');
-                const age = parseInt(ageInput.value);
-                const gender = document.querySelector('input[name="gender"]:checked').value;
-                const height = parseInt(heightInput.value);
-                const weight = parseFloat(weightInput.value);
-                const activityMultiplier = parseFloat(document.getElementById('activity').value);
-                const bodyFat = parseFloat(document.getElementById('bodyfat').value);
-                const bmi = (weight / ((height / 100) * (height / 100)));
-                const bmiStatus = getBmiStatus(bmi);
-                let bmr = 0;
-                if (bodyFat && bodyFat > 0) {
-                    bmr = 370 + (21.6 * (weight * (1 - bodyFat / 100)));
-                } else {
-                    if (gender === 'male') {
-                        bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-                    } else {
-                        bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
-                    }
-                }
-                const tdee = bmr * activityMultiplier;
-                const bmiValueEl = document.getElementById('bmi-value');
-                const bmiInterpretationEl = document.getElementById('bmi-interpretation');
-                const bmiProgressValue = document.getElementById('bmi-progress-value');
-                animateDecimal(bmiValueEl, 0, bmi, 1500);
-                bmiInterpretationEl.textContent = bmiStatus.text;
-                bmiInterpretationEl.className = bmiStatus.className;
-                document.getElementById('bmi-summary-text').textContent = bmiStatus.summary;
-                const bmiPercent = Math.min(100, Math.max(0, ((bmi - 15) / (35 - 15)) * 100));
-                setTimeout(() => {
-                    bmiProgressValue.style.width = `${bmiPercent}%`;
-                    bmiProgressValue.style.backgroundColor = `var(--${bmiStatus.className})`;
-                }, 100);
-                animateValue(document.getElementById('tdee-value'), 0, Math.round(tdee), 1500);
-                animateValue(document.getElementById('bmr-value'), 0, Math.round(bmr), 1500);
-                document.getElementById('bmi-warning').innerHTML = bmiStatus.warning;
-                document.getElementById('bmi-action').innerHTML = bmiStatus.action;
-                document.getElementById('bmi-recommendation').innerHTML = bmiStatus.recommendation;
-                const macroGoals = {
-                    "Giảm cân (thâm hụt ~15%)": tdee - (tdee * 0.15),
-                    "Duy trì": tdee,
-                    "Tăng cơ (dư thừa ~15%)": tdee + (tdee * 0.15)
-                };
-                const macroResultsBody = document.getElementById('macro-results-body');
-                macroResultsBody.innerHTML = '';
-                for (const goal in macroGoals) {
-                    const calories = macroGoals[goal];
-                    const protein = Math.round(weight * 2);
-                    const fat = Math.round((calories * 0.25) / 9);
-                    const carbs = Math.round((calories - (protein * 4) - (fat * 9)) / 4);
-                    macroResultsBody.innerHTML += `
-                        <tr>
-                            <td class="goal-col">${goal}</td>
-                            <td>${Math.round(calories).toLocaleString('vi-VN')}</td>
-                            <td>${protein}</td>
-                            <td>${carbs}</td>
-                            <td>${fat}</td>
-                        </tr>
-                    `;
-                }
-                document.getElementById('cta-text').textContent = bmiStatus.ctaText;
-                document.getElementById('cta-link').textContent = bmiStatus.ctaButton;
-                document.getElementById('cta-link').href = bmiStatus.ctaLinkHref;
-                calculateBtn.disabled = false;
-                calculateBtn.textContent = 'Phân Tích Lại';
-            }, 500);
-        });
+            
+            const age = parseInt(ageInput.value);
+            const height = parseInt(heightInput.value);
+            const weight = parseFloat(weightInput.value);
+            const activityValue = document.getElementById('activity').value;
+            
+            resultsArea.style.display = 'block';
+            calculateBtn.textContent = 'Phân Tích Lại';
+            
+            setTimeout(() => { resultsArea.scrollIntoView({ behavior: 'smooth' }); }, 100);
 
+            const bmi = (weight / ((height / 100) * (height / 100)));
+            const bmiStatus = getBmiStatus(bmi);
+            let bmr = 0;
+            if (parseFloat(document.getElementById('bodyfat').value) > 0) { bmr = 370 + (21.6 * (weight * (1 - parseFloat(document.getElementById('bodyfat').value) / 100))); } else { if (document.querySelector('input[name="gender"]:checked').value === 'male') { bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5; } else { bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161; } }
+            const tdee = bmr * parseFloat(activityValue);
+            
+            animateDecimal(document.getElementById('bmi-value'), 0, bmi, 1500);
+            document.getElementById('bmi-interpretation').textContent = bmiStatus.text;
+            document.getElementById('bmi-interpretation').className = bmiStatus.className;
+            document.getElementById('bmi-summary-text').textContent = bmiStatus.summary;
+            const bmiPercent = Math.min(100, Math.max(0, ((bmi - 15) / (35 - 15)) * 100));
+            setTimeout(() => { 
+                const progressEl = document.getElementById('bmi-progress-value');
+                progressEl.style.width = `${bmiPercent}%`; 
+                const colorVar = `--${bmiStatus.className}`;
+                progressEl.style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue(colorVar);
+            }, 100);
+            animateValue(document.getElementById('tdee-value'), 0, Math.round(tdee), 1500);
+            animateValue(document.getElementById('bmr-value'), 0, Math.round(bmr), 1500);
+            document.getElementById('bmi-warning').innerHTML = bmiStatus.warning;
+            document.getElementById('bmi-action').innerHTML = bmiStatus.action;
+            document.getElementById('bmi-recommendation').innerHTML = bmiStatus.recommendation;
+            const heightInMeters = height / 100;
+            document.getElementById('min-weight').textContent = (18.5 * (heightInMeters * heightInMeters)).toFixed(1);
+            document.getElementById('max-weight').textContent = (24.9 * (heightInMeters * heightInMeters)).toFixed(1);
+            
+            const macroGoals = { "Giảm cân (thâm hụt ~15%)": tdee - (tdee * 0.15), "Duy trì": tdee, "Tăng cơ (dư thừa ~15%)": tdee + (tdee * 0.15) };
+            const macrosContainer = document.getElementById('macros-results-container');
+            macrosContainer.innerHTML = '';
+            for (const goal in macroGoals) {
+                const calories = macroGoals[goal];
+                const protein = Math.round(weight * 2);
+                const fat = Math.round((calories * 0.25) / 9);
+                const carbs = Math.round((calories - (protein * 4) - (fat * 9)) / 4);
+                const cardHTML = `
+                    <div class="macro-card">
+                        <h4>${goal}</h4>
+                        <div class="macro-calories">${Math.round(calories).toLocaleString('vi-VN')} <span>calo</span></div>
+                        <div class="macro-details-grid">
+                            <div class="macro-detail-item"><strong>${protein}</strong>g Protein</div>
+                            <div class="macro-detail-item"><strong>${carbs}</strong>g Carb</div>
+                            <div class="macro-detail-item"><strong>${fat}</strong>g Fat</div>
+                        </div>
+                    </div>`;
+                macrosContainer.innerHTML += cardHTML;
+            }
+            document.getElementById('cta-text').textContent = bmiStatus.ctaText;
+            document.getElementById('cta-link').textContent = bmiStatus.ctaButton;
+            document.getElementById('cta-link').href = bmiStatus.ctaLinkHref;
+
+            const restingHR = parseInt(document.getElementById('hr-resting').value);
+            const hrAnalysisCard = document.getElementById('hr-analysis-card');
+            if (age) {
+                const maxHR = 208 - (0.7 * age); 
+                const hrAccordionContainer = document.getElementById('hr-accordion-container');
+                hrAccordionContainer.innerHTML = '';
+
+                const hrMaxData = { name: 'Nhịp tim tối đa (HRmax)', content: `Nhịp tim tối đa (HRmax) là số nhịp đập cao nhất mà tim bạn có thể đạt được trong một phút khi gắng sức... Ước tính HRmax của bạn là <strong>${Math.round(maxHR)} bpm</strong> (công thức Tanaka).<br><strong>Lời khuyên:</strong> Đừng ám ảnh bởi công thức, hãy dùng nó làm điểm khởi đầu và điều chỉnh dựa trên cảm nhận thực tế.` };
+                const zonesData = [
+                    { name: 'Vùng 1: Phục hồi', range: [0.5, 0.6], color: '#a0e1f6', content: "Ở vùng này, cơ thể sử dụng năng lượng từ chất béo, kích thích lưu thông máu giúp cơ bắp phục hồi nhanh hơn. Hãy sử dụng cho các bài khởi động, thả lỏng và trong các ngày phục hồi." },
+                    { name: 'Vùng 2: Đốt mỡ & Nền tảng', range: [0.6, 0.7], color: '#7cebcf', content: "Vùng quan trọng nhất để xây dựng sức bền, nơi cơ thể học cách sử dụng chất béo làm nhiên liệu chính. Các bài tập dài (long run, long ride) nên được thực hiện ở đây." },
+                    { name: 'Vùng 3: Aerobic (Tempo)', range: [0.7, 0.8], color: '#f7d685', content: "Cải thiện hiệu quả hệ tim mạch, giúp duy trì tốc độ \"khá nhanh\" trong thời gian dài. Cẩn thận không tập quá nhiều ở \"vùng xám\" này vì nó gây căng thẳng đáng kể." },
+                    { name: 'Vùng 4: Ngưỡng Anaerobic', range: [0.8, 0.9], color: '#f5b072', content: "Vùng cường độ cao giúp nâng cao ngưỡng lactate (LT), yếu tố quyết định thành tích sức bền. Nên tập dưới dạng các bài biến tốc (intervals) và không quá 1-2 lần/tuần." },
+                    { name: 'Vùng 5: Tối đa (VO2 Max)', range: [0.9, 1.0], color: '#f28b82', content: "Nỗ lực gắng sức toàn diện giúp phát triển sức mạnh và tốc độ tối đa, cải thiện VO2 max. Chỉ dành cho người có nền tảng thể lực tốt, thực hiện dưới dạng HIIT ngắn." }
+                ];
+                
+                let accordionHTML = `<div class="accordion-item"><button class="accordion-header"><div class="zone-title">${hrMaxData.name}</div><span class="accordion-icon">+</span></button><div class="accordion-content"><div class="content-inner"><p>${hrMaxData.content}</p></div></div></div>`;
+                
+                zonesData.forEach(zone => {
+                    let lower, upper;
+                    if (restingHR) { lower = Math.round(((maxHR - restingHR) * zone.range[0]) + restingHR); upper = Math.round(((maxHR - restingHR) * zone.range[1]) + restingHR); } else { lower = Math.round(maxHR * zone.range[0]); upper = Math.round(maxHR * zone.range[1]); }
+                    accordionHTML += `<div class="accordion-item"><button class="accordion-header"><div class="zone-title"><span class="zone-color" style="background-color: ${zone.color};"></span>${zone.name}</div><small style="margin-left: auto; margin-right: 15px; font-weight: 600; color: var(--primary-color);">${lower} - ${upper} bpm</small><span class="accordion-icon">+</span></button><div class="accordion-content"><div class="content-inner"><p>${zone.content}</p></div></div></div>`;
+                });
+                hrAccordionContainer.innerHTML = accordionHTML;
+
+                hrAnalysisCard.style.display = 'block';
+                
+                document.querySelectorAll('.accordion-header').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const content = button.nextElementSibling;
+                        button.classList.toggle('active');
+                        if (content.style.maxHeight) {
+                            content.style.maxHeight = null;
+                        } else {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                        }
+                    });
+                });
+            } else {
+                hrAnalysisCard.style.display = 'none';
+            }
+        });
+        
         const modal = document.getElementById('qr-modal');
         const donateButton = document.getElementById('donate-button');
         const closeButton = document.querySelector('.close-button');
         donateButton.onclick = function() { modal.style.display = "block"; }
         closeButton.onclick = function() { modal.style.display = "none"; }
         window.onclick = function(event) { if (event.target == modal) { modal.style.display = "none"; } }
+
+        const shareButton = document.getElementById('share-button');
+        const copySuccessMsg = document.getElementById('copy-success-msg');
+        shareButton.addEventListener('click', () => {
+            const pageUrl = window.location.href;
+            navigator.clipboard.writeText(pageUrl).then(() => {
+                copySuccessMsg.style.display = 'block';
+                shareButton.disabled = true;
+                setTimeout(() => {
+                    copySuccessMsg.style.display = 'none';
+                    shareButton.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Không thể sao chép link: ', err);
+                alert('Sao chép link thất bại!');
+            });
+        });
     </script>
 </body>
 </html>
-
-
